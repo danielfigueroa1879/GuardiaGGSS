@@ -129,13 +129,13 @@
 
       <label for="riesgo">Riesgo Asociado:</label>
       <select id="riesgo">
-        <!-- Opciones por defecto para eventos que no sean deportivos -->
+        <!-- Opciones por defecto -->
         <option value="bajo">Bajo</option>
         <option value="medio">Medio</option>
         <option value="alto">Alto</option>
       </select>
 
-      <!-- Se mantiene la "Cantidad de Público" al final -->
+      <!-- La "Cantidad de Público" permanece al final -->
       <label for="publico">Cantidad de Público:</label>
       <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
 
@@ -162,7 +162,7 @@
     </div>
 
     <script>
-      // Actualización del select "Tipo de Evento" para cambiar las opciones de "Riesgo Asociado"
+      // Actualiza el select "Tipo de Evento" para cambiar las opciones de "Riesgo Asociado"
       document.getElementById("evento").addEventListener("change", function() {
         this.style.fontWeight = "bold";
         if (window.innerWidth <= 480) {
@@ -182,7 +182,7 @@
         }
       });
 
-      // Evento para el select de "Riesgo Asociado"
+      // Evento para el select "Riesgo Asociado"
       document.getElementById("riesgo").addEventListener("change", function() {
         this.style.fontWeight = "bold";
         if (window.innerWidth <= 480) {
@@ -215,7 +215,7 @@
           alert("Por favor, ingrese una cantidad válida de público.");
           return;
         }
-        // Se define el factor de riesgo para el cálculo de guardias (público/100)
+        // Factor de riesgo para calcular guardias: público/100 * factor
         var factorRiesgo;
         if (riesgo === "bajo") {
           factorRiesgo = 1;
@@ -227,19 +227,21 @@
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
         var supervisores;
         
-        // Si el evento es "concierto" (se usan las lógicas existentes)
-        if (eventoType === "concierto" && riesgo === "alto") {
-          supervisores = Math.ceil(publico / 1500);
-        } else if (eventoType === "concierto" && riesgo === "bajo") {
-          if (guardias < 10) {
-            supervisores = 0;
-          } else {
-            supervisores = Math.ceil(guardias / 50);
+        // Lógica para concierto
+        if (eventoType === "concierto") {
+          if (riesgo === "alto") {
+            supervisores = Math.ceil(publico / 1500);
+          } else if (riesgo === "bajo") {
+            if (guardias < 10) {
+              supervisores = 0;
+            } else {
+              supervisores = Math.ceil(guardias / 50);
+            }
+          } else if (publico >= 3000) {
+            supervisores = 1;
           }
-        } else if (eventoType === "concierto" && publico >= 3000) {
-          supervisores = 1;
         }
-        // Para eventos deportivos de riesgo bajo (Clase C)
+        // Lógica para evento deportivo de riesgo bajo (Clase C)
         else if (eventoType === "deportivo" && riesgo === "bajo") {
           if (guardias <= 50) {
             supervisores = 1;
@@ -252,22 +254,20 @@
         // Nueva lógica para instalaciones
         else if (eventoType === "instalacion") {
           if (riesgo === "bajo") {
-            if (guardias < 10) {
+            if (guardias < 15) {
               supervisores = 0;
-            } else if (guardias < 25) {
+            } else if (guardias <= 20) {
               supervisores = 1;
             } else {
-              // A partir de 25 guardias, cada bloque de 15 agrega un supervisor adicional
-              supervisores = 1 + Math.ceil((guardias - 24) / 15);
+              supervisores = 1 + Math.ceil((guardias - 20) / 15);
             }
           } else if (riesgo === "medio") {
-            if (guardias < 8) {
+            if (guardias < 15) {
               supervisores = 0;
-            } else if (guardias < 15) {
+            } else if (guardias <= 20) {
               supervisores = 1;
             } else {
-              // A partir de 15 guardias, cada bloque de 10 agrega un supervisor adicional
-              supervisores = 1 + Math.ceil((guardias - 14) / 10);
+              supervisores = 1 + Math.ceil((guardias - 20) / 10);
             }
           } else if (riesgo === "alto") {
             if (guardias < 5) {
@@ -275,12 +275,11 @@
             } else if (guardias < 10) {
               supervisores = 1;
             } else {
-              // A partir de 10 guardias, cada bloque de 5 agrega un supervisor adicional
               supervisores = 1 + Math.ceil((guardias - 9) / 5);
             }
           }
         }
-        // Para los demás casos se utiliza la lógica previa
+        // Para los demás casos se utiliza la lógica previa:
         else {
           if (guardias > 100) {
             supervisores = Math.floor(guardias / 40);
@@ -290,9 +289,21 @@
             supervisores = 0;
           }
         }
+        
         var supervisorText = (supervisores === 1) ? " supervisor" : " supervisores";
+        
+        // Agrega un mensaje final según el tipo de evento
+        var eventText = "";
+        if (eventoType === "deportivo") {
+          eventText = " para este evento deportivo.";
+        } else if (eventoType === "concierto") {
+          eventText = " para este concierto.";
+        } else if (eventoType === "instalacion") {
+          eventText = " para esta instalación.";
+        }
+        
         document.getElementById("result").innerText =
-          "Necesitas " + guardias + " guardias y " + supervisores + supervisorText + " para este evento.";
+          "Necesitas " + guardias + " guardias y " + supervisores + supervisorText + eventText;
       }
     </script>
   </div>
