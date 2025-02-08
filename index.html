@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -135,7 +135,7 @@
         <option value="alto">Alto</option>
       </select>
 
-      <!-- Se ha movido "Cantidad de Público" al final -->
+      <!-- Se mantiene la "Cantidad de Público" al final -->
       <label for="publico">Cantidad de Público:</label>
       <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
 
@@ -225,11 +225,21 @@
         }
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
         var supervisores;
-        // Si el evento es "concierto" y el riesgo es "alto", se usa la proporción de 1500 personas por 1 supervisor
+        
+        // Lógica para concierto de riesgo ALTO (permanece igual)
         if (eventoType === "concierto" && riesgo === "alto") {
           supervisores = Math.ceil(publico / 1500);
         }
-        // Para otros conciertos (no de riesgo alto) con público mayor o igual a 3000, asigna 1 supervisor
+        // Nueva lógica para concierto de riesgo BAJO:
+        else if (eventoType === "concierto" && riesgo === "bajo") {
+          if (guardias < 20) {
+            supervisores = 0;
+          } else {
+            // Se asigna 1 supervisor por cada bloque de 30 guardias
+            supervisores = Math.ceil(guardias / 30);
+          }
+        }
+        // Para otros conciertos (por ejemplo, riesgo medio) con público >= 3000 se asigna 1 supervisor
         else if (eventoType === "concierto" && publico >= 3000) {
           supervisores = 1;
         }
