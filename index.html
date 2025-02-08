@@ -79,7 +79,6 @@
         font-size: 30px;
       }
       button, input, select {
-        /* Aunque se define un tamaño base en esta media query, se actualizará en el script cuando se elija un valor */
         font-size: 20px;
         padding: 14px;
       }
@@ -108,7 +107,6 @@
         background-color: #2e2e2e;
         color: #e0e0e0;
       }
-      /* En modo noche se aumenta el tamaño de fuente y se ajusta el fondo para select e input */
       select, input {
         font-size: 20px;
         background-color: #333;
@@ -209,6 +207,7 @@
       // Función para calcular la cantidad de guardias y supervisores
       function calcularGuardias() {
         document.getElementById("result").innerText = "";
+        var eventoType = document.getElementById("evento").value;
         var publico = parseInt(document.getElementById("publico").value);
         var riesgo = document.getElementById("riesgo").value;
         if (isNaN(publico) || publico <= 0) {
@@ -225,8 +224,8 @@
         }
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
         var supervisores;
-        // Si el público es mayor a 3000, se asigna 1 supervisor
-        if (publico > 3000) {
+        // Si el evento es "concierto" y el público es mayor o igual a 3000, se asigna 1 supervisor
+        if (eventoType === "concierto" && publico >= 3000) {
           supervisores = 1;
         } else {
           if (guardias > 100) {
