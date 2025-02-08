@@ -163,7 +163,7 @@
     </div>
 
     <script>
-      // Cuando se cambia el "Tipo de Evento", actualizamos las opciones de "Riesgo Asociado"
+      // Actualización del select "Tipo de Evento" para cambiar las opciones de "Riesgo Asociado"
       document.getElementById("evento").addEventListener("change", function() {
         this.style.fontWeight = "bold";
         if (window.innerWidth <= 480) {
@@ -171,7 +171,7 @@
         }
         var riesgoSelect = document.getElementById("riesgo");
         if (this.value === "deportivo") {
-          // Para eventos deportivos, se muestran las categorías
+          // Para eventos deportivos, se muestran las categorías: A = Alto, B = Medio, C = Bajo
           riesgoSelect.innerHTML = '<option value="alto">Clase A</option>' +
                                    '<option value="medio">Clase B</option>' +
                                    '<option value="bajo">Clase C</option>';
@@ -224,7 +224,16 @@
           factorRiesgo = 2;
         }
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
-        var supervisores = guardias >= 50 ? Math.floor(guardias / 50) : 0;
+        var supervisores;
+        if (guardias > 100) {
+          // Si hay más de 100 guardias, se utiliza la relación 1 supervisor cada 40 guardias
+          supervisores = Math.floor(guardias / 40);
+        } else if (guardias >= 50) {
+          // Para guardias entre 50 y 100 se usa 1 supervisor cada 50 guardias
+          supervisores = Math.floor(guardias / 50);
+        } else {
+          supervisores = 0;
+        }
         var supervisorText = (supervisores === 1) ? " supervisor" : " supervisores";
         document.getElementById("result").innerText =
           "Necesitas " + guardias + " guardias y " + supervisores + supervisorText + " para este evento.";
