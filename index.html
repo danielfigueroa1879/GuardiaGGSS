@@ -127,9 +127,6 @@
         <option value="instalacion">Instalación</option>
       </select>
 
-      <label for="publico">Cantidad de Público:</label>
-      <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
-
       <label for="riesgo">Riesgo Asociado:</label>
       <select id="riesgo">
         <!-- Opciones por defecto para eventos que no sean deportivos -->
@@ -137,6 +134,10 @@
         <option value="medio">Medio</option>
         <option value="alto">Alto</option>
       </select>
+
+      <!-- Se ha movido "Cantidad de Público" al final -->
+      <label for="publico">Cantidad de Público:</label>
+      <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
 
       <button type="button" onclick="calcularGuardias()">Calcular Guardias</button>
     </form>
@@ -224,7 +225,6 @@
         }
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
         var supervisores;
-
         // Si el evento es "concierto" y el riesgo es "alto", se usa la proporción de 1500 personas por 1 supervisor
         if (eventoType === "concierto" && riesgo === "alto") {
           supervisores = Math.ceil(publico / 1500);
