@@ -1,1 +1,150 @@
-<h1>Cantidad de Guardias por tipo de Evento</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cantidad de Guardias por Evento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        label, select, input, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        select, input, button {
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input[type="number"] {
+            width: calc(100% - 01px); /* Ajusta el ancho restando el padding y el borde */
+        }
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        .result {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #ff0505;
+        }
+        .normativa {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .normativa h2 {
+            font-size: 18px;
+            margin-top: 0;
+        }
+        .normativa ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cantidad de Guardias por tipo de Evento</h1>
+        <form>
+            <label for="evento">Tipo de Evento:</label>
+            <select id="evento">
+                <option value="concierto">Concierto</option>
+                <option value="deportivo">Evento Deportivo</option>
+                <option value="instalacion">Instalación</option>
+            </select>
+
+            <label for="publico">Cantidad de Público:</label>
+            <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
+
+            <label for="riesgo">Riesgo Asociado:</label>
+            <select id="riesgo">
+                <option value="bajo">Bajo</option>
+                <option value="medio">Medio</option>
+                <option value="alto">Alto</option>
+            </select>
+
+            <button type="button" onclick="calcularGuardias()">Calcular Guardias</button>
+        </form>
+
+        <div class="result" id="result"></div>
+
+        <div class="normativa">
+            <h2>Normativa Legal Aplicable</h2>
+            <p>
+                Este cálculo se basa en la normativa de seguridad privada vigente en Chile, incluyendo:
+                <ul>
+                    <li><strong>Decreto Ley 3.607:</strong> Ministerio del Interior.</li>
+                    <li><strong>Ley 21.659:</strong> Ley de Seguridad Privada.</li>
+                    <li><strong>Decreto Supremo 93:</strong> Ministerio de Defensa Nacional.</li>
+                    <li><strong>Decreto 32 (2024):</strong> Modifica el Decreto 261, Manual Operativo.</li>
+                    <li><strong>Ley 19.327:</strong> Ley de Derechos y Deberes en el Fútbol Profesional.</li>
+                </ul>
+                Todos los guardias y medidas de seguridad deben cumplir con estos requisitos, especialmente en eventos masivos.
+            </p>
+        </div>
+
+        <script>
+            function calcularGuardias() {
+                // Limpiar el resultado anterior
+                document.getElementById("result").innerText = "";
+
+                var publico = parseInt(document.getElementById("publico").value);
+                var riesgo = document.getElementById("riesgo").value;
+
+                if (isNaN(publico) || publico <= 0) {
+                    alert("Por favor, ingrese una cantidad válida de público.");
+                    return;
+                }
+
+                // Ajustes según el riesgo
+                var factorRiesgo;
+                if (riesgo === "bajo") {
+                    factorRiesgo = 1;
+                } else if (riesgo === "medio") {
+                    factorRiesgo = 1.5;
+                } else if (riesgo === "alto") {
+                    factorRiesgo = 2;
+                }
+
+                // Cálculo de guardias
+                var guardias = Math.ceil((publico / 100) * factorRiesgo);
+                
+                // Cálculo de supervisores: 1 supervisor por cada 50 guardias
+                var supervisores = guardias >= 50 ? Math.floor(guardias / 50) : 0;
+                
+                // Mostrar el resultado
+                document.getElementById("result").innerText = 
+                    "Necesitas " + guardias + " guardias y " + supervisores + " supervisores para este evento.";
+            }
+        </script>
+    </div>
+</body>
+</html>
+
