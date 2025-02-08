@@ -252,7 +252,7 @@
         // Nueva lógica para instalaciones
         else if (eventoType === "instalacion") {
           if (riesgo === "bajo") {
-            if (guardias < 15) {
+            if (guardias < 10) {
               supervisores = 0;
             } else if (guardias < 25) {
               supervisores = 1;
@@ -261,7 +261,7 @@
               supervisores = 1 + Math.ceil((guardias - 24) / 15);
             }
           } else if (riesgo === "medio") {
-            if (guardias < 10) {
+            if (guardias < 8) {
               supervisores = 0;
             } else if (guardias < 15) {
               supervisores = 1;
