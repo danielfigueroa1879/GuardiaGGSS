@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <!-- Esta etiqueta asegura que el ancho de la página se ajuste al ancho del dispositivo -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cantidad de Guardias por Evento</title>
     <style>
         body {
@@ -10,8 +13,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 10px; /* Agrega un pequeño margen interno para que no se pegue al borde en móviles */
         }
         .container {
             background-color: #fff;
@@ -24,6 +28,7 @@
         h1 {
             font-size: 24px;
             margin-bottom: 20px;
+            text-align: center;
         }
         label, select, input, button {
             display: block;
@@ -34,9 +39,6 @@
             padding: 10px;
             font-size: 16px;
             box-sizing: border-box;
-        }
-        input[type="number"] {
-            width: calc(100% - 01px); /* Ajusta el ancho restando el padding y el borde */
         }
         button {
             background-color: #333;
@@ -66,6 +68,19 @@
         }
         .normativa ul {
             padding-left: 20px;
+        }
+        /* Media query para pantallas pequeñas */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 20px;
+            }
+            button, input, select {
+                font-size: 14px;
+                padding: 8px;
+            }
+            .result {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -99,13 +114,15 @@
             <h2>Normativa Legal Aplicable</h2>
             <p>
                 Este cálculo se basa en la normativa de seguridad privada vigente en Chile, incluyendo:
-                <ul>
-                    <li><strong>Decreto Ley 3.607:</strong> Ministerio del Interior.</li>
-                    <li><strong>Ley 21.659:</strong> Ley de Seguridad Privada.</li>
-                    <li><strong>Decreto Supremo 93:</strong> Ministerio de Defensa Nacional.</li>
-                    <li><strong>Decreto 32 (2024):</strong> Modifica el Decreto 261, Manual Operativo.</li>
-                    <li><strong>Ley 19.327:</strong> Ley de Derechos y Deberes en el Fútbol Profesional.</li>
-                </ul>
+            </p>
+            <ul>
+                <li><strong>Decreto Ley 3.607:</strong> Ministerio del Interior.</li>
+                <li><strong>Ley 21.659:</strong> Ley de Seguridad Privada.</li>
+                <li><strong>Decreto Supremo 93:</strong> Ministerio de Defensa Nacional.</li>
+                <li><strong>Decreto 32 (2024):</strong> Modifica el Decreto 261, Manual Operativo.</li>
+                <li><strong>Ley 19.327:</strong> Ley de Derechos y Deberes en el Fútbol Profesional.</li>
+            </ul>
+            <p>
                 Todos los guardias y medidas de seguridad deben cumplir con estos requisitos, especialmente en eventos masivos.
             </p>
         </div>
@@ -147,4 +164,3 @@
     </div>
 </body>
 </html>
-
