@@ -225,14 +225,19 @@
         }
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
         var supervisores;
-        if (guardias > 100) {
-          // Si hay más de 100 guardias, se utiliza la relación 1 supervisor cada 40 guardias
-          supervisores = Math.floor(guardias / 40);
-        } else if (guardias >= 50) {
-          // Para guardias entre 50 y 100 se usa 1 supervisor cada 50 guardias
-          supervisores = Math.floor(guardias / 50);
+        // Si el público es mayor a 3000, se asigna 1 supervisor
+        if (publico > 3000) {
+          supervisores = 1;
         } else {
-          supervisores = 0;
+          if (guardias > 100) {
+            // Si hay más de 100 guardias, se utiliza la relación 1 supervisor cada 40 guardias
+            supervisores = Math.floor(guardias / 40);
+          } else if (guardias >= 50) {
+            // Para guardias entre 50 y 100 se usa 1 supervisor cada 50 guardias
+            supervisores = Math.floor(guardias / 50);
+          } else {
+            supervisores = 0;
+          }
         }
         var supervisorText = (supervisores === 1) ? " supervisor" : " supervisores";
         document.getElementById("result").innerText =
