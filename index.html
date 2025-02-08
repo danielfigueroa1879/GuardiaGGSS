@@ -165,7 +165,6 @@
       // Evento para el select de "Tipo de Evento"
       document.getElementById("evento").addEventListener("change", function() {
         this.style.fontWeight = "bold";
-        // Si es dispositivo móvil (ancho <= 480px), se aumenta el tamaño de la fuente
         if (window.innerWidth <= 480) {
           this.style.fontSize = "18px";
         }
@@ -189,7 +188,7 @@
         } else {
           this.style.fontWeight = "normal";
           if (window.innerWidth <= 480) {
-            this.style.fontSize = "14px"; // Valor por defecto para móvil
+            this.style.fontSize = "14px";
           }
         }
       });
@@ -213,8 +212,10 @@
         }
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
         var supervisores = guardias >= 50 ? Math.floor(guardias / 50) : 0;
+        // Usamos singular o plural para supervisores según su cantidad
+        var supervisorText = (supervisores === 1) ? " supervisor" : " supervisores";
         document.getElementById("result").innerText =
-          "Necesitas " + guardias + " guardias y " + supervisores + " supervisores para este evento.";
+          "Necesitas " + guardias + " guardias y " + supervisores + supervisorText + " para este evento.";
       }
     </script>
   </div>
