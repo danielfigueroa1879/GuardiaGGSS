@@ -15,7 +15,7 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 10px; /* Agrega un pequeño margen interno para que no se pegue al borde en móviles */
+            padding: 10px; /* Evita que el contenido toque los bordes en móviles */
         }
         .container {
             background-color: #fff;
@@ -54,7 +54,7 @@
             font-size: 18px;
             margin-top: 20px;
             color: #ff0505;
-            font-weight: bold; /* El texto en rojo ahora se muestra en negrilla */
+            font-weight: bold; /* El resultado se muestra en negrilla */
         }
         .normativa {
             margin-top: 30px;
@@ -129,6 +129,7 @@
         </div>
 
         <script>
+            // Función para calcular la cantidad de guardias y supervisores
             function calcularGuardias() {
                 // Limpiar el resultado anterior
                 document.getElementById("result").innerText = "";
@@ -141,7 +142,7 @@
                     return;
                 }
 
-                // Ajustes según el riesgo
+                // Ajuste según el riesgo
                 var factorRiesgo;
                 if (riesgo === "bajo") {
                     factorRiesgo = 1;
@@ -161,6 +162,20 @@
                 document.getElementById("result").innerText = 
                     "Necesitas " + guardias + " guardias y " + supervisores + " supervisores para este evento.";
             }
+
+            // Eventos para aplicar negrilla al seleccionar o ingresar valores
+            document.getElementById("evento").addEventListener("change", function() {
+                this.style.fontWeight = "bold";
+            });
+
+            document.getElementById("riesgo").addEventListener("change", function() {
+                this.style.fontWeight = "bold";
+            });
+
+            document.getElementById("publico").addEventListener("input", function() {
+                // Si hay algún valor, se muestra en negrilla; si no, vuelve a la normalidad
+                this.style.fontWeight = this.value !== "" ? "bold" : "normal";
+            });
         </script>
     </div>
 </body>
