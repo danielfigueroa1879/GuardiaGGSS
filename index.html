@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <!-- Ajuste para dispositivos móviles -->
+  <!-- Asegura que el contenido se ajuste al ancho del dispositivo -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cantidad de Guardias por Evento</title>
   <style>
@@ -24,10 +24,8 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       max-width: 400px;
       width: 100%;
-      /* Transición para el movimiento suave del contenedor */
       transition: transform 0.3s ease;
     }
-    /* Efecto hover: solo mueve el contenedor grande */
     .container:hover {
       transform: translateY(-5px);
     }
@@ -76,7 +74,6 @@
     .normativa ul {
       padding-left: 20px;
     }
-    /* Media query para pantallas pequeñas */
     @media (max-width: 480px) {
       h1 {
         font-size: 20px;
@@ -89,7 +86,7 @@
         font-size: 16px;
       }
     }
-    /* Modo noche: se aplica automáticamente en sistemas que lo soporten */
+    /* Modo noche: solo se aplica cuando el dispositivo está en modo oscuro */
     @media (prefers-color-scheme: dark) {
       body {
         background-color: #121212;
@@ -105,6 +102,17 @@
       }
       button:hover {
         background-color: #666;
+      }
+      .normativa {
+        background-color: #2e2e2e;
+        color: #e0e0e0;
+      }
+      /* Aumenta el tamaño de fuente y ajusta el fondo para select e input */
+      select, input {
+        font-size: 20px;
+        background-color: #333;
+        color: #e0e0e0;
+        border: 1px solid #444;
       }
     }
   </style>
@@ -154,18 +162,13 @@
 
     <script>
       function calcularGuardias() {
-        // Limpiar el resultado anterior
         document.getElementById("result").innerText = "";
-
         var publico = parseInt(document.getElementById("publico").value);
         var riesgo = document.getElementById("riesgo").value;
-
         if (isNaN(publico) || publico <= 0) {
           alert("Por favor, ingrese una cantidad válida de público.");
           return;
         }
-
-        // Ajuste según el riesgo
         var factorRiesgo;
         if (riesgo === "bajo") {
           factorRiesgo = 1;
@@ -174,14 +177,8 @@
         } else if (riesgo === "alto") {
           factorRiesgo = 2;
         }
-
-        // Cálculo de guardias
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
-        
-        // Cálculo de supervisores: 1 supervisor por cada 50 guardias
         var supervisores = guardias >= 50 ? Math.floor(guardias / 50) : 0;
-        
-        // Mostrar el resultado
         document.getElementById("result").innerText =
           "Necesitas " + guardias + " guardias y " + supervisores + " supervisores para este evento.";
       }
