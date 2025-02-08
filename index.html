@@ -232,7 +232,7 @@
         }
         // Nueva lógica para concierto de riesgo BAJO:
         else if (eventoType === "concierto" && riesgo === "bajo") {
-          if (guardias < 20) {
+          if (guardias < 10) {
             supervisores = 0;
           } else {
             // Se asigna 1 supervisor por cada bloque de 50 guardias
