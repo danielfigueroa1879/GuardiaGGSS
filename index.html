@@ -40,15 +40,23 @@
             font-size: 16px;
             box-sizing: border-box;
         }
+        /* Transiciones y efecto al pasar el cursor */
+        select, input {
+            transition: transform 0.3s ease, font-weight 0.3s ease;
+        }
+        select:hover, input:hover {
+            transform: translateY(-3px);
+        }
         button {
             background-color: #333;
             color: #fff;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
         }
         button:hover {
             background-color: #555;
+            transform: translateY(-3px);
         }
         .result {
             font-size: 18px;
@@ -173,7 +181,6 @@
             });
 
             document.getElementById("publico").addEventListener("input", function() {
-                // Si hay algún valor, se muestra en negrilla; si no, vuelve a la normalidad
                 this.style.fontWeight = this.value !== "" ? "bold" : "normal";
             });
         </script>
