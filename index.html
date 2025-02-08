@@ -227,21 +227,25 @@
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
         var supervisores;
         
-        // Lógica para concierto
+        // Lógica para conciertos
         if (eventoType === "concierto") {
           if (riesgo === "alto") {
             supervisores = Math.ceil(publico / 1500);
+          } else if (riesgo === "medio") {
+            if (guardias < 10) {
+              supervisores = 0;
+            } else {
+              supervisores = Math.ceil(guardias / 50);
+            }
           } else if (riesgo === "bajo") {
             if (guardias < 10) {
               supervisores = 0;
             } else {
               supervisores = Math.ceil(guardias / 50);
             }
-          } else if (publico >= 3000) {
-            supervisores = 1;
           }
         }
-        // Lógica para evento deportivo de riesgo bajo (Clase C)
+        // Lógica para eventos deportivos de riesgo bajo (Clase C)
         else if (eventoType === "deportivo" && riesgo === "bajo") {
           if (guardias <= 50) {
             supervisores = 1;
@@ -259,6 +263,7 @@
             } else if (guardias <= 20) {
               supervisores = 1;
             } else {
+              // A partir de 25 guardias, cada bloque de 15 agrega 1 supervisor adicional
               supervisores = 1 + Math.ceil((guardias - 20) / 15);
             }
           } else if (riesgo === "medio") {
@@ -267,6 +272,7 @@
             } else if (guardias <= 20) {
               supervisores = 1;
             } else {
+              // A partir de 21 guardias, cada bloque de 10 agrega 1 supervisor adicional
               supervisores = 1 + Math.ceil((guardias - 20) / 10);
             }
           } else if (riesgo === "alto") {
@@ -275,11 +281,12 @@
             } else if (guardias < 10) {
               supervisores = 1;
             } else {
+              // A partir de 10 guardias, cada bloque de 5 agrega 1 supervisor adicional
               supervisores = 1 + Math.ceil((guardias - 9) / 5);
             }
           }
         }
-        // Para los demás casos se utiliza la lógica previa:
+        // Para los demás casos (o si no se cumplió ninguna condición anterior)
         else {
           if (guardias > 100) {
             supervisores = Math.floor(guardias / 40);
@@ -291,8 +298,6 @@
         }
         
         var supervisorText = (supervisores === 1) ? " supervisor" : " supervisores";
-        
-        // Agrega un mensaje final según el tipo de evento
         var eventText = "";
         if (eventoType === "deportivo") {
           eventText = " para este evento deportivo.";
