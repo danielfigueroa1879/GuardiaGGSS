@@ -169,7 +169,7 @@
         }
         var riesgoSelect = document.getElementById("riesgo");
         if (this.value === "deportivo") {
-          // Para eventos deportivos, se muestran las categorías: Clase A = Alto, Clase B = Medio, Clase C = Bajo
+          // Para eventos deportivos, se muestran las categorías: A = Alto, B = Medio, C = Bajo
           riesgoSelect.innerHTML = '<option value="alto">Clase A</option>' +
                                    '<option value="medio">Clase B</option>' +
                                    '<option value="bajo">Clase C</option>';
@@ -224,24 +224,15 @@
         }
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
         var supervisores;
-
-        // Si es un concierto de riesgo alto, se aplica una relación de 1 supervisor cada 30 guardias
-        if (eventoType === "concierto" && riesgo === "alto") {
-          if (publico >= 3000) {
-            supervisores = 1;
-          } else {
-            supervisores = Math.floor(guardias / 30);
-          }
-        } 
-        // Para otros conciertos: si público es mayor o igual a 3000, asigna 1 supervisor
-        else if (eventoType === "concierto" && publico >= 3000) {
+        // Si el evento es "concierto" y el público es mayor o igual a 3000, se asigna 1 supervisor
+        if (eventoType === "concierto" && publico >= 3000) {
           supervisores = 1;
-        } 
-        // Para los demás casos
-        else {
+        } else {
           if (guardias > 100) {
+            // Si hay más de 100 guardias, se utiliza la relación 1 supervisor cada 40 guardias
             supervisores = Math.floor(guardias / 40);
           } else if (guardias >= 50) {
+            // Para guardias entre 50 y 100 se usa 1 supervisor cada 50 guardias
             supervisores = Math.floor(guardias / 50);
           } else {
             supervisores = 0;
