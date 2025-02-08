@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <!-- Esta etiqueta asegura que el ancho de la página se ajuste al ancho del dispositivo -->
+  <!-- Ajuste para dispositivos móviles -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cantidad de Guardias por Evento</title>
   <style>
@@ -15,7 +15,7 @@
       align-items: center;
       min-height: 100vh;
       margin: 0;
-      padding: 10px; /* Evita que el contenido toque los bordes en móviles */
+      padding: 10px;
     }
     .container {
       background-color: #fff;
@@ -24,6 +24,12 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       max-width: 400px;
       width: 100%;
+      /* Transición para el movimiento suave del contenedor */
+      transition: transform 0.3s ease;
+    }
+    /* Efecto hover: solo mueve el contenedor grande */
+    .container:hover {
+      transform: translateY(-5px);
     }
     h1 {
       font-size: 24px;
@@ -40,22 +46,12 @@
       font-size: 16px;
       box-sizing: border-box;
     }
-    /* Transiciones y efecto hover con vendor prefixes y mayor desplazamiento */
-    select, input, button {
-      -webkit-transition: transform 0.3s ease, font-weight 0.3s ease;
-      transition: transform 0.3s ease, font-weight 0.3s ease;
-    }
-    select:hover, input:hover, button:hover {
-      -webkit-transform: translateY(-5px);
-      transform: translateY(-5px);
-    }
     button {
       background-color: #333;
       color: #fff;
       border: none;
       cursor: pointer;
-      -webkit-transition: background-color 0.3s, transform 0.3s;
-      transition: background-color 0.3s, transform 0.3s;
+      transition: background-color 0.3s;
     }
     button:hover {
       background-color: #555;
@@ -64,7 +60,7 @@
       font-size: 18px;
       margin-top: 20px;
       color: #ff0505;
-      font-weight: bold; /* El resultado se muestra en negrilla */
+      font-weight: bold;
     }
     .normativa {
       margin-top: 30px;
@@ -91,6 +87,24 @@
       }
       .result {
         font-size: 16px;
+      }
+    }
+    /* Modo noche: se aplica automáticamente en sistemas que lo soporten */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: #e0e0e0;
+      }
+      .container {
+        background-color: #1e1e1e;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      }
+      button {
+        background-color: #444;
+        color: #fff;
+      }
+      button:hover {
+        background-color: #666;
       }
     }
   </style>
@@ -139,7 +153,6 @@
     </div>
 
     <script>
-      // Función para calcular la cantidad de guardias y supervisores
       function calcularGuardias() {
         // Limpiar el resultado anterior
         document.getElementById("result").innerText = "";
@@ -164,27 +177,14 @@
 
         // Cálculo de guardias
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
-
+        
         // Cálculo de supervisores: 1 supervisor por cada 50 guardias
         var supervisores = guardias >= 50 ? Math.floor(guardias / 50) : 0;
-
+        
         // Mostrar el resultado
         document.getElementById("result").innerText =
           "Necesitas " + guardias + " guardias y " + supervisores + " supervisores para este evento.";
       }
-
-      // Eventos para aplicar negrilla al seleccionar o ingresar valores
-      document.getElementById("evento").addEventListener("change", function () {
-        this.style.fontWeight = "bold";
-      });
-
-      document.getElementById("riesgo").addEventListener("change", function () {
-        this.style.fontWeight = "bold";
-      });
-
-      document.getElementById("publico").addEventListener("input", function () {
-        this.style.fontWeight = this.value !== "" ? "bold" : "normal";
-      });
     </script>
   </div>
 </body>
