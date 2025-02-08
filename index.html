@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -215,6 +215,7 @@
           alert("Por favor, ingrese una cantidad válida de público.");
           return;
         }
+        // Se define el factor de riesgo para el cálculo de guardias (público/100)
         var factorRiesgo;
         if (riesgo === "bajo") {
           factorRiesgo = 1;
@@ -226,24 +227,19 @@
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
         var supervisores;
         
-        // Lógica para concierto de riesgo ALTO (permanece igual)
+        // Si el evento es "concierto" (se usan las lógicas existentes)
         if (eventoType === "concierto" && riesgo === "alto") {
           supervisores = Math.ceil(publico / 1500);
-        }
-        // Nueva lógica para concierto de riesgo BAJO:
-        else if (eventoType === "concierto" && riesgo === "bajo") {
+        } else if (eventoType === "concierto" && riesgo === "bajo") {
           if (guardias < 10) {
             supervisores = 0;
           } else {
-            // Se asigna 1 supervisor por cada bloque de 50 guardias
             supervisores = Math.ceil(guardias / 50);
           }
-        }
-        // Para otros conciertos (por ejemplo, riesgo medio) con público >= 3000 se asigna 1 supervisor
-        else if (eventoType === "concierto" && publico >= 3000) {
+        } else if (eventoType === "concierto" && publico >= 3000) {
           supervisores = 1;
         }
-        // Para eventos deportivos de riesgo bajo (Clase C) se aplica la nueva lógica:
+        // Para eventos deportivos de riesgo bajo (Clase C)
         else if (eventoType === "deportivo" && riesgo === "bajo") {
           if (guardias <= 50) {
             supervisores = 1;
@@ -253,7 +249,38 @@
             supervisores = 3;
           }
         }
-        // Para los demás casos se utiliza la lógica previa:
+        // Nueva lógica para instalaciones
+        else if (eventoType === "instalacion") {
+          if (riesgo === "bajo") {
+            if (guardias < 15) {
+              supervisores = 0;
+            } else if (guardias < 25) {
+              supervisores = 1;
+            } else {
+              // A partir de 25 guardias, cada bloque de 15 agrega un supervisor adicional
+              supervisores = 1 + Math.ceil((guardias - 24) / 15);
+            }
+          } else if (riesgo === "medio") {
+            if (guardias < 10) {
+              supervisores = 0;
+            } else if (guardias < 15) {
+              supervisores = 1;
+            } else {
+              // A partir de 15 guardias, cada bloque de 10 agrega un supervisor adicional
+              supervisores = 1 + Math.ceil((guardias - 14) / 10);
+            }
+          } else if (riesgo === "alto") {
+            if (guardias < 5) {
+              supervisores = 0;
+            } else if (guardias < 10) {
+              supervisores = 1;
+            } else {
+              // A partir de 10 guardias, cada bloque de 5 agrega un supervisor adicional
+              supervisores = 1 + Math.ceil((guardias - 9) / 5);
+            }
+          }
+        }
+        // Para los demás casos se utiliza la lógica previa
         else {
           if (guardias > 100) {
             supervisores = Math.floor(guardias / 40);
