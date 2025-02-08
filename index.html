@@ -264,7 +264,7 @@
               supervisores = 1;
             } else {
               // A partir de 25 guardias, cada bloque de 15 agrega 1 supervisor adicional
-              supervisores = 1 + Math.ceil((guardias - 20) / 15);
+              supervisores = 1 + Math.ceil((guardias - 20) / 30);
             }
           } else if (riesgo === "medio") {
             if (guardias < 15) {
@@ -273,7 +273,7 @@
               supervisores = 1;
             } else {
               // A partir de 21 guardias, cada bloque de 10 agrega 1 supervisor adicional
-              supervisores = 1 + Math.ceil((guardias - 20) / 10);
+              supervisores = 1 + Math.ceil((guardias - 20) / 20);
             }
           } else if (riesgo === "alto") {
             if (guardias < 5) {
