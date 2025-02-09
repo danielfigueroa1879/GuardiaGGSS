@@ -104,14 +104,14 @@
       transform: translateY(-2px);
     }
 
-    /* Estilo para la caja de respuesta (modo claro) */
+    /* Estilo para la caja de respuesta en modo claro */
     .result {
       font-size: 1.125rem;
       margin-top: 1.5rem;
       color: #d32f2f;
       font-weight: bold;
       text-align: center;
-      background-color: #222;  /* Fondo para modo claro (ajústalo si lo deseas) */
+      background-color: #222;
       padding: 10px;
       border-radius: 6px;
       border: 1px solid black;  /* Borde negro en modo claro */
@@ -199,8 +199,8 @@
       /* En modo oscuro, la caja de respuesta tendrá el mismo fondo que los inputs (#444)
          y un borde de color blanco */
       .result {
-        background-color: #444;
-        border: 1px solid white;
+        background-color: #444 !important;
+        border: 1px solid white !important;
       }
     }
   </style>
