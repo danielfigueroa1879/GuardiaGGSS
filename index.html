@@ -115,6 +115,16 @@
       margin-left: 20px;
     }
 
+    /* Firma en el costado inferior derecho */
+    .signature {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 12px;
+      color: var(--text-color);
+      opacity: 0.6;
+    }
+
     /* Estilos para dispositivos móviles: aspecto moderno */
     @media (max-width: 480px) {
       body {
@@ -160,6 +170,9 @@
         background-color: #2e2e2e;
         color: #e0e0e0;
       }
+      .signature {
+        color: #d0d0d0;
+      }
     }
   </style>
 </head>
@@ -196,6 +209,7 @@
       </p>
       <ul>
         <li><strong>Decreto Ley 3.607:</strong> Ministerio del Interior.</li>
+        <li><strong>Ley 21.659:</strong> Ley de Seguridad Privada.</li>
         <li><strong>Decreto Supremo 93:</strong> Ministerio de Defensa Nacional.</li>
         <li><strong>Decreto 32 (2024):</strong> Modifica el Decreto 261, Manual Operativo.</li>
         <li><strong>Ley 19.327:</strong> Ley de Derechos y Deberes en el Fútbol Profesional.</li>
@@ -329,7 +343,6 @@
         }
         
         var supervisorText = (supervisores === 1) ? " supervisor" : " supervisores";
-        
         var eventText = (eventoType === "deportivo") ? " para este evento deportivo." :
                         (eventoType === "concierto") ? " para este concierto." :
                         (eventoType === "instalacion") ? " para esta instalación." : "";
@@ -339,5 +352,7 @@
       }
     </script>
   </div>
+  <!-- Firma en la esquina inferior derecha -->
+  <div class="signature">Daniel Figueroa Chacama</div>
 </body>
 </html>
