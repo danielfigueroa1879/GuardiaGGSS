@@ -232,7 +232,6 @@
           if (riesgo === "alto") {
             supervisores = Math.ceil(publico / 1500);
           } else if (riesgo === "medio") {
-            // Lógica para concierto riesgo medio (por ejemplo, se asigna 1 supervisor por cada 50 guardias)
             if (guardias < 10) {
               supervisores = 0;
             } else {
@@ -248,17 +247,14 @@
             supervisores = 1;
           }
         }
-        // Lógica para evento deportivo de riesgo ALTO (Clase A)
+        // Lógica para evento deportivo de riesgo alto (Clase A) – NUEVA LÓGICA:
         else if (eventoType === "deportivo" && riesgo === "alto") {
-          // Se recalcula guardias (ya que factorRiesgo es 2)
+          // Se recalcula guardias con factor 2
           guardias = Math.ceil((publico / 100) * 2);
-          if (guardias < 40) {
-            supervisores = 1;
-          } else {
-            supervisores = 1 + Math.ceil((guardias - 40) / 30);
-          }
+          // Se asigna 1 supervisor por cada 30 guardias (los primeros 30 ya dan 1 supervisor)
+          supervisores = Math.ceil(guardias / 30);
         }
-        // Lógica para evento deportivo de riesgo BAJO (Clase C)
+        // Lógica para evento deportivo de riesgo bajo (Clase C)
         else if (eventoType === "deportivo" && riesgo === "bajo") {
           if (guardias <= 50) {
             supervisores = 1;
@@ -268,7 +264,7 @@
             supervisores = 3;
           }
         }
-        // Lógica para instalaciones
+        // Nueva lógica para instalaciones
         else if (eventoType === "instalacion") {
           if (riesgo === "bajo") {
             if (guardias < 15) {
@@ -276,7 +272,7 @@
             } else if (guardias <= 20) {
               supervisores = 1;
             } else {
-              // A partir de 25 guardias, cada bloque de 15 agrega un supervisor adicional
+              // A partir de 25 guardias, cada bloque de 15 agrega 1 supervisor adicional
               supervisores = 1 + Math.ceil((guardias - 20) / 15);
             }
           } else if (riesgo === "medio") {
@@ -285,7 +281,7 @@
             } else if (guardias <= 20) {
               supervisores = 1;
             } else {
-              // A partir de 21 guardias, cada bloque de 10 agrega un supervisor adicional
+              // A partir de 21 guardias, cada bloque de 10 agrega 1 supervisor adicional
               supervisores = 1 + Math.ceil((guardias - 20) / 10);
             }
           } else if (riesgo === "alto") {
@@ -294,7 +290,7 @@
             } else if (guardias < 10) {
               supervisores = 1;
             } else {
-              // A partir de 10 guardias, cada bloque de 5 agrega un supervisor adicional
+              // A partir de 10 guardias, cada bloque de 5 agrega 1 supervisor adicional
               supervisores = 1 + Math.ceil((guardias - 9) / 5);
             }
           }
@@ -312,7 +308,7 @@
         
         var supervisorText = (supervisores === 1) ? " supervisor" : " supervisores";
         
-        // Personaliza el mensaje final según el tipo de evento
+        // Mensaje final personalizado según el tipo de evento
         var eventText = "";
         if (eventoType === "deportivo") {
           eventText = " para este evento deportivo.";
