@@ -27,7 +27,7 @@
       --primary-color: #1D3557;
       --accent-color: #457B9D;
       --text-color: #333333;
-      --shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Mayor sombra */
+      --shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
       --border-radius: 12px;
       --transition-speed: 0.3s;
       --input-border: #ced4da;
@@ -111,10 +111,10 @@
       color: #d32f2f;
       font-weight: bold;
       text-align: center;
-      background-color: #222;
+      background-color: #fff;         /* Fondo claro similar a los inputs */
       padding: 10px;
       border-radius: 6px;
-      border: 1px solid black;  /* Borde negro en modo claro */
+      border: 1px solid black;        /* Borde negro en modo claro */
     }
 
     .normativa {
@@ -170,10 +170,9 @@
         color: #d0d0d0;
       }
       .container {
-        background-color: #2c2c2c;  /* Tono más claro para el formulario en modo oscuro */
+        background-color: #2c2c2c;
         box-shadow: 0 6px 12px rgba(255, 255, 255, 0.2);
       }
-      /* Para los select e inputs en modo oscuro */
       select, input {
         background-color: #444;
         color: #e0e0e0;
@@ -197,10 +196,11 @@
         color: #ffffff;
       }
       /* En modo oscuro, la caja de respuesta tendrá el mismo fondo que los inputs (#444)
-         y un borde de color blanco */
+         y un borde blanco; además, se cambia el color de las letras a un rojo más oscuro */
       .result {
         background-color: #444 !important;
         border: 1px solid white !important;
+        color: #8B0000 !important;  /* Rojo más oscuro */
       }
     }
   </style>
