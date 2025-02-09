@@ -17,17 +17,19 @@
     :root {
       --font-family: 'Roboto', sans-serif;
       --bg-color: #f5f7fa;
-      --container-bg: #ffffff;
+      /* Fondo del contenedor más oscuro en modo claro */
+      --container-bg: #e0e0e0;
       --primary-color: #1D3557;
       --accent-color: #457B9D;
       --text-color: #333333;
-      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      /* Sombra aumentada para darle mayor profundidad */
+      --shadow: 0 6px 12px rgba(0,0,0,0.2);
       --border-radius: 12px;
       --transition-speed: 0.3s;
       --input-border: #ced4da;
       --focus-color: #1D3557;
     }
-
+    
     body {
       font-family: var(--font-family);
       background: var(--bg-color);
@@ -38,7 +40,7 @@
       min-height: 100vh;
       padding: 20px;
     }
-
+    
     .container {
       background-color: var(--container-bg);
       padding: 2rem;
@@ -52,20 +54,20 @@
     .container:hover {
       transform: translateY(-5px);
     }
-
+    
     h1 {
       font-size: 1.75rem;
       margin-bottom: 1.5rem;
       text-align: center;
       color: var(--primary-color);
     }
-
+    
     label {
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 500;
     }
-
+    
     select, input {
       width: 100%;
       padding: 0.75rem;
@@ -80,7 +82,7 @@
       border-color: var(--focus-color);
       box-shadow: 0 0 5px rgba(29,53,87,0.3);
     }
-
+    
     .btn-calc {
       width: 100%;
       padding: 0.75rem;
@@ -97,7 +99,7 @@
       background-color: var(--accent-color);
       transform: translateY(-2px);
     }
-
+    
     .result {
       font-size: 1.125rem;
       margin-top: 1.5rem;
@@ -105,7 +107,7 @@
       font-weight: bold;
       text-align: center;
     }
-
+    
     .normativa {
       margin-top: 2rem;
       padding: 1rem;
@@ -123,7 +125,7 @@
       list-style-type: disc;
       margin-left: 1.25rem;
     }
-
+    
     .signature {
       position: absolute;
       bottom: 8px;
@@ -132,7 +134,7 @@
       color: var(--text-color);
       opacity: 0.6;
     }
-
+    
     @media (max-width: 480px) {
       body {
         padding: 15px;
@@ -151,7 +153,7 @@
         padding: 1.5rem;
       }
     }
-
+    
     /* Modo oscuro */
     @media (prefers-color-scheme: dark) {
       body {
@@ -180,41 +182,10 @@
       .signature {
         color: #d0d0d0;
       }
-      /* Modo oscuro */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #121212;
-    color: #d0d0d0;
-  }
-  .container {
-    background-color: #1e1e1e;
-    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
-  }
-  select, input {
-    background-color: #333;
-    color: #e0e0e0;
-    border: 1px solid #444;
-  }
-  .btn-calc {
-    background-color: #444;
-  }
-  .btn-calc:hover {
-    background-color: #666;
-  }
-  .normativa {
-    background-color: #2e2e2e;
-    color: #e0e0e0;
-  }
-  .signature {
-    color: #d0d0d0;
-  }
-  /* Ajuste para que los títulos sean visibles en modo oscuro */
-  h1,
-  .normativa h2 {
-    color: #ffffff;
-  }
-}
-
+      h1,
+      .normativa h2 {
+        color: #ffffff;
+      }
     }
   </style>
 </head>
@@ -228,22 +199,22 @@
         <option value="deportivo">Evento Deportivo</option>
         <option value="instalacion">Instalación</option>
       </select>
-
+    
       <label for="riesgo">Riesgo Asociado:</label>
       <select id="riesgo">
         <option value="bajo">Bajo</option>
         <option value="medio">Medio</option>
         <option value="alto">Alto</option>
       </select>
-
+    
       <label for="publico">Cantidad de Público:</label>
       <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
     </form>
-
+    
     <div class="result" id="result"></div>
     
     <button class="btn-calc" type="button" id="calcularBtn">Calcular Guardias</button>
-
+    
     <div class="normativa">
       <h2>Normativa Legal Aplicable</h2>
       <p>
@@ -262,16 +233,15 @@
     
     <div class="signature">Daniel Figueroa Chacama</div>
   </div>
-
+  
   <script>
     const eventoSelect = document.getElementById("evento");
     const riesgoSelect = document.getElementById("riesgo");
     const publicoInput = document.getElementById("publico");
     const resultDiv = document.getElementById("result");
     const calcularBtn = document.getElementById("calcularBtn");
-
+    
     eventoSelect.addEventListener("change", () => {
-      // Actualiza las opciones de riesgo según el tipo de evento
       if (eventoSelect.value === "deportivo") {
         riesgoSelect.innerHTML = `
           <option value="alto">Clase A</option>
@@ -286,23 +256,22 @@
         `;
       }
     });
-
+    
     calcularBtn.addEventListener("click", () => {
       resultDiv.innerText = "";
       const eventoType = eventoSelect.value;
       const publico = parseInt(publicoInput.value);
       const riesgo = riesgoSelect.value;
-
+    
       if (isNaN(publico) || publico <= 0) {
         alert("Por favor, ingrese una cantidad válida de público.");
         return;
       }
-
-      // Factor de riesgo para el cálculo de guardias
+    
       const factorRiesgo = riesgo === "bajo" ? 1 : riesgo === "medio" ? 1.5 : 2;
       let guardias = Math.ceil((publico / 100) * factorRiesgo);
       let supervisores = 0;
-
+    
       if (eventoType === "concierto") {
         if (riesgo === "alto") {
           supervisores = Math.ceil(publico / 1500);
@@ -357,12 +326,12 @@
           supervisores = 0;
         }
       }
-
+    
       const supervisorText = supervisores === 1 ? " supervisor" : " supervisores";
       const eventText = eventoType === "deportivo" ? " para este evento deportivo." :
                         eventoType === "concierto" ? " para este concierto." :
                         eventoType === "instalacion" ? " para esta instalación." : "";
-
+    
       resultDiv.innerText = `Necesitas ${guardias} guardias y ${supervisores}${supervisorText}${eventText}`;
     });
   </script>
