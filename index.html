@@ -20,7 +20,7 @@
     .container {
       background-color: #fff;
       padding: 20px;
-      border-radius: 12px; /* Contenedor más redondeado */
+      border-radius: 12px; /* Contenedor principal redondeado */
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       max-width: 400px;
       width: 100%;
@@ -34,17 +34,19 @@
       margin-bottom: 20px;
       text-align: center;
     }
-    label, select, input {
+    label {
       display: block;
       width: 100%;
       margin-bottom: 15px;
     }
+    /* Se aplica border-radius a los campos de entrada */
     select, input {
       padding: 10px;
       font-size: 16px;
       box-sizing: border-box;
+      border-radius: 8px;
     }
-    /* Botón de calcular con margen superior */
+    /* Botón con mayor border-radius y margen superior */
     .btn-calc {
       display: block;
       width: 100%;
@@ -54,6 +56,7 @@
       background-color: #333;
       color: #fff;
       border: none;
+      border-radius: 20px;
       cursor: pointer;
       transition: background-color 0.3s;
       box-sizing: border-box;
@@ -61,11 +64,15 @@
     .btn-calc:hover {
       background-color: #555;
     }
+    /* Contenedor de la respuesta con border-radius y fondo suave */
     .result {
       font-size: 18px;
       margin-top: 20px;
       color: #ff0505;
       font-weight: bold;
+      background-color: #fff6f6;
+      padding: 10px;
+      border-radius: 8px;
     }
     .normativa {
       margin-top: 30px;
@@ -119,6 +126,7 @@
         background-color: #333;
         color: #e0e0e0;
         border: 1px solid #444;
+        border-radius: 8px;
       }
     }
   </style>
@@ -147,10 +155,10 @@
       <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
     </form>
 
-    <!-- Se ha movido el contenedor de resultados por encima del botón -->
+    <!-- Contenedor de resultados ubicado encima del botón -->
     <div class="result" id="result"></div>
     
-    <!-- Botón "Calcular Guardias" -->
+    <!-- Botón "Calcular Guardias" con mayor margen -->
     <button class="btn-calc" type="button" onclick="calcularGuardias()">Calcular Guardias</button>
 
     <div class="normativa">
