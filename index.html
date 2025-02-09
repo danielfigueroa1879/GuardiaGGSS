@@ -34,24 +34,31 @@
       margin-bottom: 20px;
       text-align: center;
     }
-    label, select, input, button {
+    label, select, input {
       display: block;
       width: 100%;
       margin-bottom: 15px;
     }
-    select, input, button {
+    select, input {
       padding: 10px;
       font-size: 16px;
       box-sizing: border-box;
     }
-    button {
+    /* Botón movido fuera del form y con margen superior */
+    .btn-calc {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 20px;
       background-color: #333;
       color: #fff;
       border: none;
       cursor: pointer;
       transition: background-color 0.3s;
+      box-sizing: border-box;
     }
-    button:hover {
+    .btn-calc:hover {
       background-color: #555;
     }
     .result {
@@ -78,7 +85,7 @@
       h1 {
         font-size: 30px;
       }
-      button, input, select {
+      select, input, .btn-calc {
         font-size: 20px;
         padding: 14px;
       }
@@ -96,11 +103,11 @@
         background-color: #1e1e1e;
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
       }
-      button {
+      .btn-calc {
         background-color: #444;
         color: #fff;
       }
-      button:hover {
+      .btn-calc:hover {
         background-color: #666;
       }
       .normativa {
@@ -135,12 +142,13 @@
         <option value="alto">Alto</option>
       </select>
 
-      <!-- La "Cantidad de Público" permanece al final -->
+      <!-- La "Cantidad de Público" permanece al final del formulario -->
       <label for="publico">Cantidad de Público:</label>
       <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
-
-      <button type="button" onclick="calcularGuardias()">Calcular Guardias</button>
     </form>
+
+    <!-- Botón "Calcular Guardias" movido fuera del formulario -->
+    <button class="btn-calc" type="button" onclick="calcularGuardias()">Calcular Guardias</button>
 
     <div class="result" id="result"></div>
 
@@ -247,11 +255,9 @@
             supervisores = 1;
           }
         }
-        // Lógica para evento deportivo de riesgo alto (Clase A) – NUEVA LÓGICA:
+        // Lógica para evento deportivo de riesgo alto (Clase A)
         else if (eventoType === "deportivo" && riesgo === "alto") {
-          // Se recalcula guardias con factor 2
           guardias = Math.ceil((publico / 100) * 2);
-          // Se asigna 1 supervisor por cada 30 guardias (los primeros 30 ya dan 1 supervisor)
           supervisores = Math.ceil(guardias / 30);
         }
         // Lógica para evento deportivo de riesgo bajo (Clase C)
@@ -295,7 +301,7 @@
             }
           }
         }
-        // Para los demás casos se utiliza la lógica previa
+        // Para los demás casos se utiliza la lógica previa:
         else {
           if (guardias > 100) {
             supervisores = Math.floor(guardias / 40);
