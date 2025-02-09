@@ -252,10 +252,10 @@
         else if (eventoType === "deportivo" && riesgo === "alto") {
           // Se recalcula guardias (ya que factorRiesgo es 2)
           guardias = Math.ceil((publico / 100) * 2);
-          if (guardias < 40) {
+          if (guardias < 30) {
             supervisores = 1;
           } else {
-            supervisores = 1 + Math.ceil((guardias - 20) / 30);
+            supervisores = 1 + Math.ceil((guardias - 40) / 30);
           }
         }
         // Lógica para evento deportivo de riesgo BAJO (Clase C)
