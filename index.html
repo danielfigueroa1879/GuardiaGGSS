@@ -44,7 +44,7 @@
       font-size: 16px;
       box-sizing: border-box;
     }
-    /* Botón movido fuera del form y con margen superior */
+    /* Botón de calcular con margen superior */
     .btn-calc {
       display: block;
       width: 100%;
@@ -147,10 +147,11 @@
       <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
     </form>
 
-    <!-- Botón "Calcular Guardias" movido fuera del formulario -->
-    <button class="btn-calc" type="button" onclick="calcularGuardias()">Calcular Guardias</button>
-
+    <!-- Se ha movido el contenedor de resultados por encima del botón -->
     <div class="result" id="result"></div>
+    
+    <!-- Botón "Calcular Guardias" -->
+    <button class="btn-calc" type="button" onclick="calcularGuardias()">Calcular Guardias</button>
 
     <div class="normativa">
       <h2>Normativa Legal Aplicable</h2>
@@ -270,7 +271,7 @@
             supervisores = 3;
           }
         }
-        // Nueva lógica para instalaciones
+        // Lógica para instalaciones
         else if (eventoType === "instalacion") {
           if (riesgo === "bajo") {
             if (guardias < 15) {
