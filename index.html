@@ -2,146 +2,178 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <!-- Asegura que el contenido se adapte al ancho del dispositivo -->
+  <!-- Asegura que el contenido se ajuste al ancho del dispositivo -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <title>Cantidad de Guardias por Evento</title>
   <style>
-    /* Reset básico */
+    /* Reset básico y configuración global */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    html, body {
-      height: 100%;
-    }
-    /* Variables para modo claro */
+
+    /* Variables CSS para facilitar cambios y mantener consistencia */
     :root {
       --font-family: 'Aptos', sans-serif;
-      --bg-color: #fff;
-      --text-color: #000;
+      --background-color: #f0f0f0;
       --container-bg: #fff;
-      --border-color: #000;
-      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      --border-radius: 4px;
-      --transition: 0.3s;
+      --text-color: #333;
+      --primary-color: #333;
+      --accent-color: #555;
+      --shadow: 0 2px 10px rgba(0,0,0,0.1);
+      --border-radius: 12px;
     }
-    /* Modo oscuro: invierte los colores */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-color: #000;
-        --text-color: #fff;
-        --container-bg: #000;
-        --border-color: #fff;
-        --shadow: 0 2px 8px rgba(255,255,255,0.1);
-      }
-    }
+
     body {
       font-family: var(--font-family);
-      background-color: var(--bg-color);
+      background-color: var(--background-color);
       color: var(--text-color);
       display: flex;
       align-items: center;
       justify-content: center;
+      min-height: 100vh;
       padding: 20px;
     }
+
     .container {
       background-color: var(--container-bg);
-      padding: 25px 20px; /* Aumentamos un poco el padding para dar más espacio al título */
-      border: 1px solid var(--border-color);
+      padding: 30px;
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
       width: 100%;
       max-width: 400px;
-      position: relative;
-      transition: transform var(--transition);
+      transition: transform 0.3s ease;
+      position: relative; /* Para posicionar la firma dentro del contenedor */
     }
     .container:hover {
-      transform: translateY(-2px);
+      transform: translateY(-5px);
     }
-    /* Ajuste en el título para evitar que se corte */
+
     h1 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+      font-size: 24px;
+      margin-bottom: 20px;
       text-align: center;
-      color: var(--text-color);
-      white-space: normal;             /* Permite envolver el texto */
-      overflow-wrap: break-word;       /* Forza el corte si es necesario */
-      word-break: break-word;
     }
+
     label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
+      margin-bottom: 5px;
+      font-weight: 500;
     }
-    input, select {
+
+    select, input {
       width: 100%;
       padding: 10px;
-      font-size: 1rem;
-      border: 1px solid var(--border-color);
-      border-radius: var(--border-radius);
-      margin-bottom: 1rem;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      outline: none;
+      transition: border-color 0.3s ease;
     }
+    select:focus, input:focus {
+      border-color: var(--primary-color);
+    }
+
     .btn-calc {
       width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      background-color: var(--text-color);
-      color: var(--bg-color);
+      padding: 12px;
+      font-size: 16px;
       border: none;
-      border-radius: var(--border-radius);
+      border-radius: 6px;
+      background-color: var(--primary-color);
+      color: #fff;
       cursor: pointer;
-      transition: background-color var(--transition);
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
     }
     .btn-calc:hover {
-      background-color: #333;
+      background-color: var(--accent-color);
     }
+
     .result {
-      font-size: 1rem;
-      margin-top: 1rem;
-      text-align: center;
+      font-size: 18px;
+      margin-top: 20px;
+      color: #ff0505;
       font-weight: bold;
+      text-align: center;
     }
+
     .normativa {
-      margin-top: 1.5rem;
-      padding: 10px;
-      border: 1px solid var(--border-color);
-      border-radius: var(--border-radius);
-      font-size: 0.875rem;
-      line-height: 1.4;
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #e9ecef;
+      border-radius: 6px;
+      font-size: 14px;
+      line-height: 1.5;
     }
     .normativa h2 {
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
+      font-size: 18px;
+      margin-bottom: 10px;
     }
     .normativa ul {
-      list-style: disc inside;
-      margin-left: 1rem;
+      list-style-type: disc;
+      margin-left: 20px;
     }
+
     /* Firma en la esquina inferior derecha del contenedor */
     .signature {
       position: absolute;
       bottom: 5px;
       right: 10px;
-      font-size: 0.7rem;
-      opacity: 0.7;
+      font-size: 10px; /* Letras un poco más pequeñas */
+      color: var(--text-color);
+      opacity: 0.6;
     }
-    /* Ajustes para móviles */
+
+    /* Estilos para dispositivos móviles: aspecto moderno */
     @media (max-width: 480px) {
-      .container {
-        padding: 20px 15px;
+      body {
+        padding: 15px;
       }
       h1 {
-        font-size: 1.5rem;
-        margin-bottom: 0.75rem;
+        font-size: 28px;
       }
-      input, select, .btn-calc {
-        font-size: 1rem;
-        padding: 10px;
+      select, input, .btn-calc {
+        font-size: 18px;
+        padding: 14px;
       }
       .result {
-        font-size: 1rem;
+        font-size: 22px;
+      }
+      .container {
+        padding: 20px;
+      }
+    }
+
+    /* Modo oscuro */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: #d0d0d0;
+      }
+      .container {
+        background-color: #1e1e1e;
+        box-shadow: 0 2px 10px rgba(255,255,255,0.1);
+      }
+      select, input {
+        background-color: #333;
+        color: #e0e0e0;
+        border: 1px solid #444;
+      }
+      .btn-calc {
+        background-color: #444;
+      }
+      .btn-calc:hover {
+        background-color: #666;
+      }
+      .normativa {
+        background-color: #2e2e2e;
+        color: #e0e0e0;
+      }
+      .signature {
+        color: #d0d0d0;
       }
     }
   </style>
@@ -156,17 +188,22 @@
         <option value="deportivo">Evento Deportivo</option>
         <option value="instalacion">Instalación</option>
       </select>
+
       <label for="riesgo">Riesgo Asociado:</label>
       <select id="riesgo">
         <option value="bajo">Bajo</option>
         <option value="medio">Medio</option>
         <option value="alto">Alto</option>
       </select>
+
       <label for="publico">Cantidad de Público:</label>
       <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
     </form>
+
     <div class="result" id="result"></div>
+    
     <button class="btn-calc" type="button" onclick="calcularGuardias()">Calcular Guardias</button>
+
     <div class="normativa">
       <h2>Normativa Legal Aplicable</h2>
       <p>
@@ -182,44 +219,55 @@
         Todos los guardias y medidas de seguridad deben cumplir con estos requisitos, especialmente en eventos masivos.
       </p>
     </div>
+    
+    <!-- Firma dentro del contenedor -->
     <div class="signature">Daniel Figueroa Chacama</div>
+
     <script>
-      // Actualiza el select "Riesgo Asociado" según el tipo de evento
+      // Actualiza el select "Tipo de Evento" para cambiar las opciones de "Riesgo Asociado"
       document.getElementById("evento").addEventListener("change", function() {
         this.style.fontWeight = "bold";
         if (window.innerWidth <= 480) {
-          this.style.fontSize = "1rem";
+          this.style.fontSize = "18px";
         }
         var riesgoSelect = document.getElementById("riesgo");
         if (this.value === "deportivo") {
+          // Para eventos deportivos, se muestran las categorías: Clase A = Alto, Clase B = Medio, Clase C = Bajo
           riesgoSelect.innerHTML = '<option value="alto">Clase A</option>' +
                                    '<option value="medio">Clase B</option>' +
                                    '<option value="bajo">Clase C</option>';
         } else {
+          // Para otros eventos, se restauran las opciones originales
           riesgoSelect.innerHTML = '<option value="bajo">Bajo</option>' +
                                    '<option value="medio">Medio</option>' +
                                    '<option value="alto">Alto</option>';
         }
       });
+
+      // Evento para el select "Riesgo Asociado"
       document.getElementById("riesgo").addEventListener("change", function() {
         this.style.fontWeight = "bold";
         if (window.innerWidth <= 480) {
-          this.style.fontSize = "1rem";
+          this.style.fontSize = "18px";
         }
       });
+
+      // Evento para el input "Cantidad de Público"
       document.getElementById("publico").addEventListener("input", function() {
         if (this.value !== "") {
           this.style.fontWeight = "bold";
           if (window.innerWidth <= 480) {
-            this.style.fontSize = "1rem";
+            this.style.fontSize = "18px";
           }
         } else {
           this.style.fontWeight = "normal";
           if (window.innerWidth <= 480) {
-            this.style.fontSize = "1rem";
+            this.style.fontSize = "16px";
           }
         }
       });
+
+      // Función para calcular la cantidad de guardias y supervisores
       function calcularGuardias() {
         document.getElementById("result").innerText = "";
         var eventoType = document.getElementById("evento").value;
@@ -229,10 +277,12 @@
           alert("Por favor, ingrese una cantidad válida de público.");
           return;
         }
-        // Factor de riesgo
+        // Se define el factor de riesgo para el cálculo de guardias
         var factorRiesgo = (riesgo === "bajo") ? 1 : (riesgo === "medio") ? 1.5 : 2;
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
         var supervisores;
+        
+        // Lógica para conciertos
         if (eventoType === "concierto") {
           if (riesgo === "alto") {
             supervisores = Math.ceil(publico / 1500);
@@ -241,10 +291,14 @@
           } else if (publico >= 3000) {
             supervisores = 1;
           }
-        } else if (eventoType === "deportivo" && riesgo === "alto") {
+        }
+        // Lógica para evento deportivo de riesgo alto (Clase A)
+        else if (eventoType === "deportivo" && riesgo === "alto") {
           guardias = Math.ceil((publico / 100) * 2);
           supervisores = Math.ceil(guardias / 30);
-        } else if (eventoType === "deportivo" && riesgo === "bajo") {
+        }
+        // Lógica para evento deportivo de riesgo bajo (Clase C)
+        else if (eventoType === "deportivo" && riesgo === "bajo") {
           if (guardias <= 50) {
             supervisores = 1;
           } else if (guardias > 50 && guardias <= 100) {
@@ -252,7 +306,9 @@
           } else {
             supervisores = 3;
           }
-        } else if (eventoType === "instalacion") {
+        }
+        // Lógica para instalaciones
+        else if (eventoType === "instalacion") {
           if (riesgo === "bajo") {
             if (guardias < 15) {
               supervisores = 0;
@@ -278,7 +334,9 @@
               supervisores = 1 + Math.ceil((guardias - 9) / 5);
             }
           }
-        } else {
+        }
+        // Para los demás casos se utiliza la lógica previa:
+        else {
           if (guardias > 100) {
             supervisores = Math.floor(guardias / 40);
           } else if (guardias >= 50) {
@@ -287,10 +345,12 @@
             supervisores = 0;
           }
         }
+        
         var supervisorText = (supervisores === 1) ? " supervisor" : " supervisores";
         var eventText = (eventoType === "deportivo") ? " para este evento deportivo." :
                         (eventoType === "concierto") ? " para este concierto." :
                         (eventoType === "instalacion") ? " para esta instalación." : "";
+        
         document.getElementById("result").innerText =
           "Necesitas " + guardias + " guardias y " + supervisores + supervisorText + eventText;
       }
