@@ -2,12 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <!-- Se asegura que el contenido se adapte al ancho del dispositivo -->
+  <!-- Asegura que el contenido se adapte al ancho del dispositivo -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <title>Cantidad de Guardias por Evento</title>
   <style>
-    /* Reset y configuración global */
+    /* Reset básico */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -16,20 +16,30 @@
     html, body {
       height: 100%;
     }
+    /* Variables para modo claro */
     :root {
       --font-family: 'Aptos', sans-serif;
-      --background-color: #f7f7f7;
+      --bg-color: #fff;
+      --text-color: #000;
       --container-bg: #fff;
-      --text-color: #333;
-      --primary-color: #333;
-      --accent-color: #555;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      --border-radius: 10px;
-      --transition-speed: 0.3s;
+      --border-color: #000;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      --border-radius: 4px;
+      --transition: 0.3s;
+    }
+    /* Modo oscuro: invierte los colores */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #000;
+        --text-color: #fff;
+        --container-bg: #000;
+        --border-color: #fff;
+        --shadow: 0 2px 8px rgba(255,255,255,0.1);
+      }
     }
     body {
       font-family: var(--font-family);
-      background-color: var(--background-color);
+      background-color: var(--bg-color);
       color: var(--text-color);
       display: flex;
       align-items: center;
@@ -38,139 +48,100 @@
     }
     .container {
       background-color: var(--container-bg);
-      padding: 40px 30px;
+      padding: 25px 20px; /* Aumentamos un poco el padding para dar más espacio al título */
+      border: 1px solid var(--border-color);
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
       width: 100%;
       max-width: 400px;
       position: relative;
-      transition: transform var(--transition-speed) ease;
+      transition: transform var(--transition);
     }
     .container:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
+    /* Ajuste en el título para evitar que se corte */
     h1 {
       font-size: 1.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       text-align: center;
+      color: var(--text-color);
+      white-space: normal;             /* Permite envolver el texto */
+      overflow-wrap: break-word;       /* Forza el corte si es necesario */
+      word-break: break-word;
     }
     label {
       display: block;
       margin-bottom: 0.5rem;
-      font-weight: 500;
+      font-weight: bold;
     }
     input, select {
       width: 100%;
-      padding: 0.75rem;
+      padding: 10px;
       font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
       margin-bottom: 1rem;
-      outline: none;
-      transition: border-color var(--transition-speed) ease;
-    }
-    input::placeholder {
-      color: #999;
-    }
-    input:focus, select:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 2px rgba(51, 51, 51, 0.1);
     }
     .btn-calc {
-      display: block;
       width: 100%;
-      padding: 0.75rem;
+      padding: 10px;
       font-size: 1rem;
+      background-color: var(--text-color);
+      color: var(--bg-color);
       border: none;
-      border-radius: 6px;
-      background-color: var(--primary-color);
-      color: #fff;
+      border-radius: var(--border-radius);
       cursor: pointer;
-      transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
-      margin-top: 1.5rem;
+      transition: background-color var(--transition);
     }
     .btn-calc:hover {
-      background-color: var(--accent-color);
-      transform: scale(1.02);
+      background-color: #333;
     }
     .result {
-      font-size: 1.125rem;
-      margin-top: 1.5rem;
-      color: #e60000;
-      font-weight: bold;
+      font-size: 1rem;
+      margin-top: 1rem;
       text-align: center;
+      font-weight: bold;
     }
     .normativa {
-      margin-top: 2rem;
-      padding: 1rem;
-      background-color: #f2f2f2;
-      border-radius: 6px;
+      margin-top: 1.5rem;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
       font-size: 0.875rem;
-      line-height: 1.5;
+      line-height: 1.4;
     }
     .normativa h2 {
       font-size: 1rem;
       margin-bottom: 0.5rem;
     }
     .normativa ul {
-      list-style-type: disc;
-      margin-left: 1.5rem;
+      list-style: disc inside;
+      margin-left: 1rem;
     }
     /* Firma en la esquina inferior derecha del contenedor */
     .signature {
       position: absolute;
-      bottom: 8px;
-      right: 12px;
-      font-size: 0.625rem;
-      color: var(--text-color);
-      opacity: 0.6;
+      bottom: 5px;
+      right: 10px;
+      font-size: 0.7rem;
+      opacity: 0.7;
     }
-    /* Responsive para dispositivos móviles */
+    /* Ajustes para móviles */
     @media (max-width: 480px) {
-      body {
-        padding: 15px;
+      .container {
+        padding: 20px 15px;
       }
       h1 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
       }
       input, select, .btn-calc {
-        font-size: 1.125rem;
-        padding: 1rem;
+        font-size: 1rem;
+        padding: 10px;
       }
       .result {
-        font-size: 1.25rem;
-      }
-      .container {
-        padding: 30px 20px;
-      }
-    }
-    /* Modo oscuro */
-    @media (prefers-color-scheme: dark) {
-      body {
-        background-color: #121212;
-        color: #d0d0d0;
-      }
-      .container {
-        background-color: #1e1e1e;
-        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-      }
-      input, select {
-        background-color: #333;
-        color: #e0e0e0;
-        border: 1px solid #444;
-      }
-      .btn-calc {
-        background-color: #444;
-      }
-      .btn-calc:hover {
-        background-color: #666;
-      }
-      .normativa {
-        background-color: #2e2e2e;
-        color: #e0e0e0;
-      }
-      .signature {
-        color: #d0d0d0;
+        font-size: 1rem;
       }
     }
   </style>
@@ -211,14 +182,13 @@
         Todos los guardias y medidas de seguridad deben cumplir con estos requisitos, especialmente en eventos masivos.
       </p>
     </div>
-    <!-- Firma en la esquina inferior derecha del contenedor -->
     <div class="signature">Daniel Figueroa Chacama</div>
     <script>
-      // Actualiza las opciones del select "Riesgo Asociado" según el tipo de evento
+      // Actualiza el select "Riesgo Asociado" según el tipo de evento
       document.getElementById("evento").addEventListener("change", function() {
         this.style.fontWeight = "bold";
         if (window.innerWidth <= 480) {
-          this.style.fontSize = "1.125rem";
+          this.style.fontSize = "1rem";
         }
         var riesgoSelect = document.getElementById("riesgo");
         if (this.value === "deportivo") {
@@ -231,19 +201,17 @@
                                    '<option value="alto">Alto</option>';
         }
       });
-      
       document.getElementById("riesgo").addEventListener("change", function() {
         this.style.fontWeight = "bold";
         if (window.innerWidth <= 480) {
-          this.style.fontSize = "1.125rem";
+          this.style.fontSize = "1rem";
         }
       });
-      
       document.getElementById("publico").addEventListener("input", function() {
         if (this.value !== "") {
           this.style.fontWeight = "bold";
           if (window.innerWidth <= 480) {
-            this.style.fontSize = "1.125rem";
+            this.style.fontSize = "1rem";
           }
         } else {
           this.style.fontWeight = "normal";
@@ -252,7 +220,6 @@
           }
         }
       });
-      
       function calcularGuardias() {
         document.getElementById("result").innerText = "";
         var eventoType = document.getElementById("evento").value;
@@ -262,11 +229,10 @@
           alert("Por favor, ingrese una cantidad válida de público.");
           return;
         }
-        // Se define el factor de riesgo para el cálculo
+        // Factor de riesgo
         var factorRiesgo = (riesgo === "bajo") ? 1 : (riesgo === "medio") ? 1.5 : 2;
         var guardias = Math.ceil((publico / 100) * factorRiesgo);
         var supervisores;
-        
         if (eventoType === "concierto") {
           if (riesgo === "alto") {
             supervisores = Math.ceil(publico / 1500);
@@ -321,12 +287,10 @@
             supervisores = 0;
           }
         }
-        
         var supervisorText = (supervisores === 1) ? " supervisor" : " supervisores";
         var eventText = (eventoType === "deportivo") ? " para este evento deportivo." :
                         (eventoType === "concierto") ? " para este concierto." :
                         (eventoType === "instalacion") ? " para esta instalación." : "";
-        
         document.getElementById("result").innerText =
           "Necesitas " + guardias + " guardias y " + supervisores + supervisorText + eventText;
       }
