@@ -180,6 +180,41 @@
       .signature {
         color: #d0d0d0;
       }
+      /* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #d0d0d0;
+  }
+  .container {
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+  }
+  select, input {
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #444;
+  }
+  .btn-calc {
+    background-color: #444;
+  }
+  .btn-calc:hover {
+    background-color: #666;
+  }
+  .normativa {
+    background-color: #2e2e2e;
+    color: #e0e0e0;
+  }
+  .signature {
+    color: #d0d0d0;
+  }
+  /* Ajuste para que los títulos sean visibles en modo oscuro */
+  h1,
+  .normativa h2 {
+    color: #ffffff;
+  }
+}
+
     }
   </style>
 </head>
