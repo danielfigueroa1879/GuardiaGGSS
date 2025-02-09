@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <!-- Asegura que el contenido se ajuste al ancho del dispositivo -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <title>Cantidad de Guardias por Evento</title>
   <style>
     /* Reset básico y configuración global */
@@ -45,6 +44,7 @@
       width: 100%;
       max-width: 400px;
       transition: transform 0.3s ease;
+      position: relative; /* Para posicionar la firma dentro del contenedor */
     }
     .container:hover {
       transform: translateY(-5px);
@@ -116,12 +116,12 @@
       margin-left: 20px;
     }
 
-    /* Firma en el costado inferior derecho */
+    /* Firma en la esquina inferior derecha del contenedor */
     .signature {
-      position: fixed;
-      bottom: 10px;
+      position: absolute;
+      bottom: 5px;
       right: 10px;
-      font-size: 12px;
+      font-size: 10px; /* Letras un poco más pequeñas */
       color: var(--text-color);
       opacity: 0.6;
     }
@@ -210,6 +210,7 @@
       </p>
       <ul>
         <li><strong>Decreto Ley 3.607:</strong> Ministerio del Interior.</li>
+        <li><strong>Ley 21.659:</strong> Ley de Seguridad Privada.</li>
         <li><strong>Decreto Supremo 93:</strong> Ministerio de Defensa Nacional.</li>
         <li><strong>Decreto 32 (2024):</strong> Modifica el Decreto 261, Manual Operativo.</li>
         <li><strong>Ley 19.327:</strong> Ley de Derechos y Deberes en el Fútbol Profesional.</li>
@@ -218,6 +219,9 @@
         Todos los guardias y medidas de seguridad deben cumplir con estos requisitos, especialmente en eventos masivos.
       </p>
     </div>
+    
+    <!-- Firma dentro del contenedor -->
+    <div class="signature">Daniel Figueroa Chacama</div>
 
     <script>
       // Actualiza el select "Tipo de Evento" para cambiar las opciones de "Riesgo Asociado"
@@ -352,7 +356,5 @@
       }
     </script>
   </div>
-  <!-- Firma en la esquina inferior derecha -->
-  <div class="signature">Daniel Figueroa Chacama</div>
 </body>
 </html>
