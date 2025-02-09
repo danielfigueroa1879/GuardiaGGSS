@@ -215,7 +215,7 @@
           alert("Por favor, ingrese una cantidad válida de público.");
           return;
         }
-        // Factor de riesgo para calcular guardias: público/100 * factor
+        // Se define el factor de riesgo para el cálculo de guardias
         var factorRiesgo;
         if (riesgo === "bajo") {
           factorRiesgo = 1;
@@ -232,10 +232,11 @@
           if (riesgo === "alto") {
             supervisores = Math.ceil(publico / 1500);
           } else if (riesgo === "medio") {
+            // Lógica para concierto riesgo medio (por ejemplo, se asigna 1 supervisor por cada 50 guardias)
             if (guardias < 10) {
               supervisores = 0;
             } else {
-              supervisores = Math.ceil(guardias / 35);
+              supervisores = Math.ceil(guardias / 50);
             }
           } else if (riesgo === "bajo") {
             if (guardias < 10) {
@@ -243,9 +244,21 @@
             } else {
               supervisores = Math.ceil(guardias / 50);
             }
+          } else if (publico >= 3000) {
+            supervisores = 1;
           }
         }
-        // Lógica para eventos deportivos de riesgo bajo (Clase C)
+        // Lógica para evento deportivo de riesgo ALTO (Clase A)
+        else if (eventoType === "deportivo" && riesgo === "alto") {
+          // Se recalcula guardias (ya que factorRiesgo es 2)
+          guardias = Math.ceil((publico / 100) * 2);
+          if (guardias < 40) {
+            supervisores = 1;
+          } else {
+            supervisores = 1 + Math.ceil((guardias - 40) / 30);
+          }
+        }
+        // Lógica para evento deportivo de riesgo BAJO (Clase C)
         else if (eventoType === "deportivo" && riesgo === "bajo") {
           if (guardias <= 50) {
             supervisores = 1;
@@ -255,7 +268,7 @@
             supervisores = 3;
           }
         }
-        // Nueva lógica para instalaciones
+        // Lógica para instalaciones
         else if (eventoType === "instalacion") {
           if (riesgo === "bajo") {
             if (guardias < 15) {
@@ -263,8 +276,8 @@
             } else if (guardias <= 20) {
               supervisores = 1;
             } else {
-              // A partir de 25 guardias, cada bloque de 15 agrega 1 supervisor adicional
-              supervisores = 1 + Math.ceil((guardias - 20) / 30);
+              // A partir de 25 guardias, cada bloque de 15 agrega un supervisor adicional
+              supervisores = 1 + Math.ceil((guardias - 20) / 15);
             }
           } else if (riesgo === "medio") {
             if (guardias < 15) {
@@ -272,8 +285,8 @@
             } else if (guardias <= 20) {
               supervisores = 1;
             } else {
-              // A partir de 21 guardias, cada bloque de 10 agrega 1 supervisor adicional
-              supervisores = 1 + Math.ceil((guardias - 20) / 20);
+              // A partir de 21 guardias, cada bloque de 10 agrega un supervisor adicional
+              supervisores = 1 + Math.ceil((guardias - 20) / 10);
             }
           } else if (riesgo === "alto") {
             if (guardias < 5) {
@@ -281,12 +294,12 @@
             } else if (guardias < 10) {
               supervisores = 1;
             } else {
-              // A partir de 10 guardias, cada bloque de 5 agrega 1 supervisor adicional
+              // A partir de 10 guardias, cada bloque de 5 agrega un supervisor adicional
               supervisores = 1 + Math.ceil((guardias - 9) / 5);
             }
           }
         }
-        // Para los demás casos (o si no se cumplió ninguna condición anterior)
+        // Para los demás casos se utiliza la lógica previa
         else {
           if (guardias > 100) {
             supervisores = Math.floor(guardias / 40);
@@ -298,6 +311,8 @@
         }
         
         var supervisorText = (supervisores === 1) ? " supervisor" : " supervisores";
+        
+        // Personaliza el mensaje final según el tipo de evento
         var eventText = "";
         if (eventoType === "deportivo") {
           eventText = " para este evento deportivo.";
