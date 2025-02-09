@@ -22,7 +22,7 @@
     }
     :root {
       --font-family: 'Roboto', sans-serif;
-      --bg-color: #f5f7fa;  /* Color original del fondo de la página */
+      --bg-color: #f5f7fa;  /* Fondo de la página en modo claro */
       --container-bg: #ffffff;
       --primary-color: #1D3557;
       --accent-color: #457B9D;
@@ -104,17 +104,17 @@
       transform: translateY(-2px);
     }
 
-    /* Estilo para la caja de respuesta en modo claro */
+    /* Modo claro: Caja de respuesta (.result) */
     .result {
       font-size: 1.125rem;
       margin-top: 1.5rem;
       color: #d32f2f;
       font-weight: bold;
       text-align: center;
-      background-color: #fff;         /* Fondo claro similar a los inputs */
+      background-color: #fff;           /* Fondo claro, igual que los inputs */
       padding: 10px;
       border-radius: 6px;
-      border: 1px solid black;        /* Borde negro en modo claro */
+      border: 1px solid black;          /* Borde negro */
     }
 
     .normativa {
@@ -195,12 +195,11 @@
       .normativa h2 {
         color: #ffffff;
       }
-      /* En modo oscuro, la caja de respuesta tendrá el mismo fondo que los inputs (#444)
-         y un borde blanco; además, se cambia el color de las letras a un rojo más oscuro */
+      /* Modo oscuro: Caja de respuesta (.result) */
       .result {
-        background-color: #444 !important;
-        border: 1px solid white !important;
-        color: #8B0000 !important;  /* Rojo más oscuro */
+        background-color: #333 !important;  /* Fondo más oscuro que los inputs */
+        border: 1px solid white !important;   /* Borde blanco */
+        color: #8B0000 !important;             /* Texto en rojo más oscuro */
       }
     }
   </style>
