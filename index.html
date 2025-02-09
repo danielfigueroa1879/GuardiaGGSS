@@ -1,117 +1,331 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cantidad de Guardias por Evento Deportivo Clase A</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-        }
-        h1 {
-            font-size: 22px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        label, select, input, button {
-            display: block;
-            width: 100%;
-            margin-bottom: 15px;
-        }
-        select, input, button {
-            padding: 10px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #555;
-        }
-        .result {
-            font-size: 18px;
-            margin-top: 20px;
-            color: #ff0505;
-            font-weight: bold;
-            text-align: center;
-        }
-        @media (max-width: 600px) {
-            .container {
-                max-width: 90%;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <!-- Asegura que el contenido se ajuste al ancho del dispositivo -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cantidad de Guardias por Evento</title>
+  <style>
+    body {
+      font-family: Aptos, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 10px;
+    }
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 12px; /* Contenedor más redondeado */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+    .container:hover {
+      transform: translateY(-5px);
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    label, select, input, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    select, input, button {
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #555;
+    }
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      color: #ff0505;
+      font-weight: bold;
+    }
+    .normativa {
+      margin-top: 30px;
+      padding: 10px;
+      background-color: #e9ecef;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    .normativa h2 {
+      font-size: 18px;
+      margin-top: 0;
+    }
+    .normativa ul {
+      padding-left: 20px;
+    }
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 30px;
+      }
+      button, input, select {
+        font-size: 20px;
+        padding: 14px;
+      }
+      .result {
+        font-size: 25px;
+      }
+    }
+    /* Modo noche: se aplica solo cuando el dispositivo está en modo oscuro */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: #d0d0d0;
+      }
+      .container {
+        background-color: #1e1e1e;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      }
+      button {
+        background-color: #444;
+        color: #fff;
+      }
+      button:hover {
+        background-color: #666;
+      }
+      .normativa {
+        background-color: #2e2e2e;
+        color: #e0e0e0;
+      }
+      select, input {
+        font-size: 20px;
+        background-color: #333;
+        color: #e0e0e0;
+        border: 1px solid #444;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Cantidad de Guardias para Evento Deportivo Clase A</h1>
-        <form>
-            <label for="publico">Cantidad de Público:</label>
-            <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
+  <div class="container">
+    <h1>Cantidad de Guardias por tipo de Evento</h1>
+    <form>
+      <label for="evento">Tipo de Evento:</label>
+      <select id="evento">
+        <option value="concierto">Concierto</option>
+        <option value="deportivo">Evento Deportivo</option>
+        <option value="instalacion">Instalación</option>
+      </select>
 
-            <label for="riesgo">Riesgo Asociado:</label>
-            <select id="riesgo">
-                <option value="bajo">Bajo</option>
-                <option value="medio">Medio</option>
-                <option value="alto">Alto (Clase A)</option>
-            </select>
+      <label for="riesgo">Riesgo Asociado:</label>
+      <select id="riesgo">
+        <!-- Opciones por defecto -->
+        <option value="bajo">Bajo</option>
+        <option value="medio">Medio</option>
+        <option value="alto">Alto</option>
+      </select>
 
-            <button type="button" onclick="calcularGuardiasDeportivo()">Calcular Guardias</button>
-        </form>
+      <!-- La "Cantidad de Público" permanece al final -->
+      <label for="publico">Cantidad de Público:</label>
+      <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
 
-        <div class="result" id="result" aria-live="polite"></div>
+      <button type="button" onclick="calcularGuardias()">Calcular Guardias</button>
+    </form>
 
-        <script>
-            function calcularGuardiasDeportivo() {
-                var publico = parseInt(document.getElementById("publico").value);
-                var riesgo = document.getElementById("riesgo").value;
+    <div class="result" id="result"></div>
 
-                if (!publico || publico <= 0) {
-                    document.getElementById("result").innerText = "Ingrese una cantidad válida de público.";
-                    return;
-                }
-
-                // Solo aplicar lógica a eventos de riesgo alto (Clase A)
-                if (riesgo !== "alto") {
-                    document.getElementById("result").innerText = "Este cálculo solo aplica para eventos deportivos Clase A con riesgo alto.";
-                    return;
-                }
-
-                // Base: 1 guardia por cada 100 personas
-                var guardias = Math.ceil(publico / 100);
-
-                // Ajuste por riesgo alto (Clase A)
-                guardias *= 2; // Se duplica la cantidad de guardias
-
-                // Cálculo de supervisores
-                var supervisores = 1; // 1 supervisor por los primeros 30 guardias
-                if (guardias > 30) {
-                    supervisores += Math.floor((guardias - 30) / 30);
-                }
-
-                // Mostrar resultado
-                document.getElementById("result").innerText = 
-                    "Para este evento deportivo Clase A (Riesgo Alto), necesitas " + guardias + " guardias y " + supervisores + " supervisores.";
-            }
-        </script>
+    <div class="normativa">
+      <h2>Normativa Legal Aplicable</h2>
+      <p>
+        Este cálculo se basa en la normativa de seguridad privada vigente en Chile, incluyendo:
+      </p>
+      <ul>
+        <li><strong>Decreto Ley 3.607:</strong> Ministerio del Interior.</li>
+        <li><strong>Ley 21.659:</strong> Ley de Seguridad Privada.</li>
+        <li><strong>Decreto Supremo 93:</strong> Ministerio de Defensa Nacional.</li>
+        <li><strong>Decreto 32 (2024):</strong> Modifica el Decreto 261, Manual Operativo.</li>
+        <li><strong>Ley 19.327:</strong> Ley de Derechos y Deberes en el Fútbol Profesional.</li>
+      </ul>
+      <p>
+        Todos los guardias y medidas de seguridad deben cumplir con estos requisitos, especialmente en eventos masivos.
+      </p>
     </div>
+
+    <script>
+      // Actualiza el select "Tipo de Evento" para cambiar las opciones de "Riesgo Asociado"
+      document.getElementById("evento").addEventListener("change", function() {
+        this.style.fontWeight = "bold";
+        if (window.innerWidth <= 480) {
+          this.style.fontSize = "18px";
+        }
+        var riesgoSelect = document.getElementById("riesgo");
+        if (this.value === "deportivo") {
+          // Para eventos deportivos, se muestran las categorías: Clase A = Alto, Clase B = Medio, Clase C = Bajo
+          riesgoSelect.innerHTML = '<option value="alto">Clase A</option>' +
+                                   '<option value="medio">Clase B</option>' +
+                                   '<option value="bajo">Clase C</option>';
+        } else {
+          // Para otros eventos, se restauran las opciones originales
+          riesgoSelect.innerHTML = '<option value="bajo">Bajo</option>' +
+                                   '<option value="medio">Medio</option>' +
+                                   '<option value="alto">Alto</option>';
+        }
+      });
+
+      // Evento para el select "Riesgo Asociado"
+      document.getElementById("riesgo").addEventListener("change", function() {
+        this.style.fontWeight = "bold";
+        if (window.innerWidth <= 480) {
+          this.style.fontSize = "18px";
+        }
+      });
+
+      // Evento para el input "Cantidad de Público"
+      document.getElementById("publico").addEventListener("input", function() {
+        if (this.value !== "") {
+          this.style.fontWeight = "bold";
+          if (window.innerWidth <= 480) {
+            this.style.fontSize = "18px";
+          }
+        } else {
+          this.style.fontWeight = "normal";
+          if (window.innerWidth <= 480) {
+            this.style.fontSize = "14px";
+          }
+        }
+      });
+
+      // Función para calcular la cantidad de guardias y supervisores
+      function calcularGuardias() {
+        document.getElementById("result").innerText = "";
+        var eventoType = document.getElementById("evento").value;
+        var publico = parseInt(document.getElementById("publico").value);
+        var riesgo = document.getElementById("riesgo").value;
+        if (isNaN(publico) || publico <= 0) {
+          alert("Por favor, ingrese una cantidad válida de público.");
+          return;
+        }
+        // Se define el factor de riesgo para el cálculo de guardias
+        var factorRiesgo;
+        if (riesgo === "bajo") {
+          factorRiesgo = 1;
+        } else if (riesgo === "medio") {
+          factorRiesgo = 1.5;
+        } else if (riesgo === "alto") {
+          factorRiesgo = 2;
+        }
+        var guardias = Math.ceil((publico / 100) * factorRiesgo);
+        var supervisores;
+        
+        // Lógica para conciertos
+        if (eventoType === "concierto") {
+          if (riesgo === "alto") {
+            supervisores = Math.ceil(publico / 1500);
+          } else if (riesgo === "medio") {
+            // Lógica para concierto riesgo medio (por ejemplo, se asigna 1 supervisor por cada 50 guardias)
+            if (guardias < 10) {
+              supervisores = 0;
+            } else {
+              supervisores = Math.ceil(guardias / 50);
+            }
+          } else if (riesgo === "bajo") {
+            if (guardias < 10) {
+              supervisores = 0;
+            } else {
+              supervisores = Math.ceil(guardias / 50);
+            }
+          } else if (publico >= 3000) {
+            supervisores = 1;
+          }
+        }
+        // Lógica para evento deportivo de riesgo ALTO (Clase A)
+        else if (eventoType === "deportivo" && riesgo === "alto") {
+          // Se recalcula guardias (ya que factorRiesgo es 2)
+          guardias = Math.ceil((publico / 100) * 2);
+          if (guardias < 40) {
+            supervisores = 1;
+          } else {
+            supervisores = 1 + Math.ceil((guardias - 40) / 30);
+          }
+        }
+        // Lógica para evento deportivo de riesgo BAJO (Clase C)
+        else if (eventoType === "deportivo" && riesgo === "bajo") {
+          if (guardias <= 50) {
+            supervisores = 1;
+          } else if (guardias > 50 && guardias <= 100) {
+            supervisores = 2;
+          } else {
+            supervisores = 3;
+          }
+        }
+        // Lógica para instalaciones
+        else if (eventoType === "instalacion") {
+          if (riesgo === "bajo") {
+            if (guardias < 15) {
+              supervisores = 0;
+            } else if (guardias <= 20) {
+              supervisores = 1;
+            } else {
+              // A partir de 25 guardias, cada bloque de 15 agrega un supervisor adicional
+              supervisores = 1 + Math.ceil((guardias - 20) / 15);
+            }
+          } else if (riesgo === "medio") {
+            if (guardias < 15) {
+              supervisores = 0;
+            } else if (guardias <= 20) {
+              supervisores = 1;
+            } else {
+              // A partir de 21 guardias, cada bloque de 10 agrega un supervisor adicional
+              supervisores = 1 + Math.ceil((guardias - 20) / 10);
+            }
+          } else if (riesgo === "alto") {
+            if (guardias < 5) {
+              supervisores = 0;
+            } else if (guardias < 10) {
+              supervisores = 1;
+            } else {
+              // A partir de 10 guardias, cada bloque de 5 agrega un supervisor adicional
+              supervisores = 1 + Math.ceil((guardias - 9) / 5);
+            }
+          }
+        }
+        // Para los demás casos se utiliza la lógica previa
+        else {
+          if (guardias > 100) {
+            supervisores = Math.floor(guardias / 40);
+          } else if (guardias >= 50) {
+            supervisores = Math.floor(guardias / 50);
+          } else {
+            supervisores = 0;
+          }
+        }
+        
+        var supervisorText = (supervisores === 1) ? " supervisor" : " supervisores";
+        
+        // Personaliza el mensaje final según el tipo de evento
+        var eventText = "";
+        if (eventoType === "deportivo") {
+          eventText = " para este evento deportivo.";
+        } else if (eventoType === "concierto") {
+          eventText = " para este concierto.";
+        } else if (eventoType === "instalacion") {
+          eventText = " para esta instalación.";
+        }
+        
+        document.getElementById("result").innerText =
+          "Necesitas " + guardias + " guardias y " + supervisores + supervisorText + eventText;
+      }
+    </script>
+  </div>
 </body>
 </html>
