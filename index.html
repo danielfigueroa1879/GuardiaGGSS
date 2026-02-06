@@ -582,9 +582,9 @@
 
         } else if (riesgo === "medio") {
           // CLASE B — Riesgo Medio
-          // Clase B: siempre 1 guardia cada 100 espectadores
-          guardias = Math.ceil(publico / 100);
-          ratioTexto = "1 guardia cada 100 espectadores";
+          // Clase B: siempre 1 guardia cada 85 espectadores
+          guardias = Math.ceil(publico / 85);
+          ratioTexto = "1 guardia cada 85 espectadores";
           // Supervisores Clase B: 1 cada 30 guardias (mínimo 1)
           supervisores = Math.max(1, Math.ceil(guardias / 30));
           // Jefe de seguridad siempre obligatorio
