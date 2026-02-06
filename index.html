@@ -383,7 +383,7 @@
 
       <!-- Toggle de público visitante (solo para deportivo) -->
       <div class="toggle-container" id="toggleVisitante">
-        <span class="toggle-label">¿Público visitante al partido?</span>
+        <span class="toggle-label">¿Público asistente equipo visita?</span>
         <label class="toggle-switch">
           <input type="checkbox" id="publicoVisitante" checked>
           <span class="toggle-slider"></span>
@@ -553,16 +553,16 @@
         if (riesgo === "alto") {
           // CLASE A — Alto Riesgo
           if (conVisitante) {
-            // Clase A con público visitante: 1 guardia cada 60 espectadores
-            guardias = Math.ceil(publico / 60);
-            ratioTexto = "1 guardia cada 60 espectadores";
+            // Clase A con público visitante: 1 guardia cada 67 espectadores
+            guardias = Math.ceil(publico / 67);
+            ratioTexto = "1 guardia cada 67 espectadores";
           } else {
-            // Clase A SIN público visitante: se reduce a 1 cada 80 (sin segregación de hinchadas)
+            // Clase A SIN público visitante: 1 guardia cada 80 espectadores
             guardias = Math.ceil(publico / 80);
             ratioTexto = "1 guardia cada 80 espectadores (sin visitante)";
           }
-          // Supervisores Clase A: 1 cada 25 guardias (mínimo 2)
-          supervisores = Math.max(2, Math.ceil(guardias / 25));
+          // Supervisores Clase A: 1 cada 35 guardias (mínimo 2)
+          supervisores = Math.max(2, Math.ceil(guardias / 35));
           // Jefe de seguridad obligatorio
           jefesSeguridad = 1;
           // Operador CCTV: solo si se activa, siempre 1
@@ -570,7 +570,7 @@
 
           detalle = `<strong>Clase A — Alto Riesgo${!conVisitante ? " (Sin Público Visitante)" : ""}:</strong><br>`;
           detalle += `• Ratio aplicado: ${ratioTexto}<br>`;
-          detalle += `• Supervisores: 1 cada 25 guardias (mín. 2)<br>`;
+          detalle += `• Supervisores: 1 cada 35 guardias (mín. 2)<br>`;
           detalle += `• Jefe de seguridad acreditado: obligatorio<br>`;
           detalle += `• Operador CCTV: ${operadorCCTV} (videovigilancia del recinto)<br>`;
           if (conVisitante) {
@@ -587,17 +587,15 @@
           ratioTexto = "1 guardia cada 100 espectadores";
           // Supervisores Clase B: 1 cada 30 guardias (mínimo 1)
           supervisores = Math.max(1, Math.ceil(guardias / 30));
-          // Jefe de seguridad obligatorio si > 5000
-          jefesSeguridad = publico >= 5000 ? 1 : 0;
+          // Jefe de seguridad siempre obligatorio
+          jefesSeguridad = 1;
           // Operador CCTV: solo si se activa, siempre 1
           operadorCCTV = incluyeCCTV.checked ? 1 : 0;
 
           detalle = `<strong>Clase B — Riesgo Medio:</strong><br>`;
           detalle += `• Ratio aplicado: ${ratioTexto}<br>`;
           detalle += `• Supervisores: 1 cada 30 guardias (mín. 1)<br>`;
-          if (jefesSeguridad > 0) {
-            detalle += `• Jefe de seguridad acreditado: obligatorio (+5.000 asistentes)<br>`;
-          }
+          detalle += `• Jefe de seguridad acreditado: obligatorio<br>`;
           detalle += `• Operador CCTV: ${operadorCCTV} (videovigilancia del recinto)<br>`;
           if (conVisitante) {
             detalle += `• <em>Se recomienda segregación de hinchadas</em><br>`;
@@ -624,10 +622,13 @@
           }
           // Operador CCTV: solo si se activa, siempre 1
           operadorCCTV = incluyeCCTV.checked ? 1 : 0;
+          // Jefe de seguridad siempre obligatorio
+          jefesSeguridad = 1;
 
           detalle = `<strong>Clase C — Riesgo Bajo:</strong><br>`;
           detalle += `• Ratio aplicado: ${ratioTexto}<br>`;
           detalle += `• Supervisores: según escala (mín. 0 si ≤10 guardias)<br>`;
+          detalle += `• Jefe de seguridad acreditado: obligatorio<br>`;
           if (operadorCCTV > 0) {
             detalle += `• Operador CCTV: ${operadorCCTV} (videovigilancia del recinto)<br>`;
           }
