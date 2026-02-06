@@ -582,9 +582,15 @@
 
         } else if (riesgo === "medio") {
           // CLASE B — Riesgo Medio
-          // Clase B: siempre 1 guardia cada 85 espectadores
-          guardias = Math.ceil(publico / 85);
-          ratioTexto = "1 guardia cada 85 espectadores";
+          if (conVisitante) {
+            // Clase B con visitante: 1 guardia cada 85 espectadores
+            guardias = Math.ceil(publico / 85);
+            ratioTexto = "1 guardia cada 85 espectadores";
+          } else {
+            // Clase B SIN visitante: 1 guardia cada 95 espectadores
+            guardias = Math.ceil(publico / 95);
+            ratioTexto = "1 guardia cada 95 espectadores (sin visita)";
+          }
           // Supervisores Clase B: 1 cada 30 guardias (mínimo 1)
           supervisores = Math.max(1, Math.ceil(guardias / 30));
           // Jefe de seguridad siempre obligatorio
@@ -592,7 +598,7 @@
           // Operador CCTV: solo si se activa, siempre 1
           operadorCCTV = incluyeCCTV.checked ? 1 : 0;
 
-          detalle = `<strong>Clase B — Riesgo Medio:</strong><br>`;
+          detalle = `<strong>Clase B — Riesgo Medio${!conVisitante ? " (Sin Visita)" : ""}:</strong><br>`;
           detalle += `• Ratio aplicado: ${ratioTexto}<br>`;
           detalle += `• Supervisores: 1 cada 30 guardias (mín. 1)<br>`;
           detalle += `• Jefe de seguridad acreditado: obligatorio<br>`;
@@ -606,9 +612,15 @@
 
         } else {
           // CLASE C — Riesgo Bajo
-          // Clase C: 1 guardia cada 100 espectadores
-          guardias = Math.ceil(publico / 100);
-          ratioTexto = "1 guardia cada 100 espectadores";
+          if (conVisitante) {
+            // Clase C con visitante: 1 guardia cada 100 espectadores
+            guardias = Math.ceil(publico / 100);
+            ratioTexto = "1 guardia cada 100 espectadores";
+          } else {
+            // Clase C SIN visitante: 1 guardia cada 120 espectadores
+            guardias = Math.ceil(publico / 120);
+            ratioTexto = "1 guardia cada 120 espectadores (sin visita)";
+          }
           
           // Supervisores Clase C: 1 cada 40 guardias
           if (guardias <= 10) {
@@ -625,7 +637,7 @@
           // Jefe de seguridad siempre obligatorio
           jefesSeguridad = 1;
 
-          detalle = `<strong>Clase C — Riesgo Bajo:</strong><br>`;
+          detalle = `<strong>Clase C — Riesgo Bajo${!conVisitante ? " (Sin Visita)" : ""}:</strong><br>`;
           detalle += `• Ratio aplicado: ${ratioTexto}<br>`;
           detalle += `• Supervisores: según escala (mín. 0 si ≤10 guardias)<br>`;
           detalle += `• Jefe de seguridad acreditado: obligatorio<br>`;
