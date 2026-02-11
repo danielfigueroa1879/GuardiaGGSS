@@ -390,15 +390,6 @@
         </label>
       </div>
 
-      <!-- Toggle de operador CCTV (solo para deportivo) -->
-      <div class="toggle-container" id="toggleCCTV">
-        <span class="toggle-label">¿Incluir operador CCTV?</span>
-        <label class="toggle-switch">
-          <input type="checkbox" id="incluyeCCTV">
-          <span class="toggle-slider"></span>
-        </label>
-      </div>
-
       <label for="publico">Cantidad de Público:</label>
       <input type="number" id="publico" placeholder="Ingrese la cantidad de público" min="1" required>
     </form>
@@ -438,8 +429,6 @@
     const calcularBtn = document.getElementById("calcularBtn");
     const toggleVisitante = document.getElementById("toggleVisitante");
     const publicoVisitante = document.getElementById("publicoVisitante");
-    const toggleCCTV = document.getElementById("toggleCCTV");
-    const incluyeCCTV = document.getElementById("incluyeCCTV");
     const claseInfo = document.getElementById("claseInfo");
 
     // Descripciones de cada clase deportiva
@@ -470,12 +459,9 @@
       // Mostrar/ocultar toggles
       if (esDeportivo) {
         toggleVisitante.classList.add("visible");
-        toggleCCTV.classList.add("visible");
       } else {
         toggleVisitante.classList.remove("visible");
-        toggleCCTV.classList.remove("visible");
         publicoVisitante.checked = true;
-        incluyeCCTV.checked = false;
       }
 
       // Actualizar info de clase
@@ -516,7 +502,6 @@
 
     riesgoSelect.addEventListener("change", actualizarUI);
     publicoVisitante.addEventListener("change", actualizarUI);
-    incluyeCCTV.addEventListener("change", actualizarUI);
 
     // ============================================================
     // ALGORITMO MEJORADO DE CÁLCULO DE GUARDIAS
@@ -565,8 +550,8 @@
           supervisores = Math.max(2, Math.ceil(guardias / 35));
           // Jefe de seguridad obligatorio
           jefesSeguridad = 1;
-          // Operador CCTV: solo si se activa, siempre 1
-          operadorCCTV = incluyeCCTV.checked ? 1 : 0;
+          // Operador CCTV: siempre 1
+          operadorCCTV = 1;
 
           detalle = `<strong>Clase A — Alto Riesgo${!conVisitante ? " (Sin Público Visitante)" : ""}:</strong><br>`;
           detalle += `• Ratio aplicado: ${ratioTexto}<br>`;
@@ -595,8 +580,8 @@
           supervisores = Math.max(1, Math.ceil(guardias / 30));
           // Jefe de seguridad siempre obligatorio
           jefesSeguridad = 1;
-          // Operador CCTV: solo si se activa, siempre 1
-          operadorCCTV = incluyeCCTV.checked ? 1 : 0;
+          // Operador CCTV: siempre 1
+          operadorCCTV = 1;
 
           detalle = `<strong>Clase B — Riesgo Medio${!conVisitante ? " (Sin Visita)" : ""}:</strong><br>`;
           detalle += `• Ratio aplicado: ${ratioTexto}<br>`;
@@ -632,8 +617,8 @@
           } else {
             supervisores = Math.ceil(guardias / 40);
           }
-          // Operador CCTV: solo si se activa, siempre 1
-          operadorCCTV = incluyeCCTV.checked ? 1 : 0;
+          // Operador CCTV: siempre 1
+          operadorCCTV = 1;
           // Jefe de seguridad siempre obligatorio
           jefesSeguridad = 1;
 
@@ -641,9 +626,7 @@
           detalle += `• Ratio aplicado: ${ratioTexto}<br>`;
           detalle += `• Supervisores: según escala (mín. 0 si ≤10 guardias)<br>`;
           detalle += `• Jefe de seguridad acreditado: obligatorio<br>`;
-          if (operadorCCTV > 0) {
-            detalle += `• Operador CCTV: ${operadorCCTV} (videovigilancia del recinto)<br>`;
-          }
+          detalle += `• Operador CCTV: ${operadorCCTV} (videovigilancia del recinto)<br>`;
           if (publico >= 3000) {
             detalle += `• <em>Evento masivo (Ley 21.659): requiere plan de seguridad aprobado</em><br>`;
           }
