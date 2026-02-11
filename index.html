@@ -417,8 +417,10 @@
       </p>
     </div>
     
-    <div class="signature">Plataforma desarrollada por Daniel Figueroa Ch.<br></div>
-    <div class="signature">Ingeniero en Informática & Ciberseguridad.</div>
+    <div class="signature" style="position:relative; bottom:auto; right:auto; text-align:center; margin-top:1.5rem; font-size:0.7rem; line-height:1.5; opacity:0.7;">
+      © 2026 Prefectura de Coquimbo. Todos los derechos reservados.<br>
+      Plataforma desarrollada por Daniel Figueroa Ch. Ingeniero en Informática &amp; Ciberseguridad.
+    </div>
   </div>
 
   <script>
@@ -730,7 +732,7 @@
                         eventoType === "concierto" ? " para este concierto." :
                         eventoType === "instalacion" ? " para esta instalación." : "";
 
-      let resultText = `Necesita: ${guardias} guardias y ${supervisores}${supervisorText}${eventText}`;
+      let resultText = `Necesitas ${guardias} guardias y ${supervisores}${supervisorText}${eventText}`;
       
       if (jefesSeguridad > 0) {
         resultText += `\n+ ${jefesSeguridad} jefe de seguridad acreditado`;
@@ -754,3 +756,4 @@
   </script>
 </body>
 </html>
+
