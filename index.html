@@ -545,9 +545,9 @@
             guardias = Math.ceil(publico / 67);
             ratioTexto = "1 guardia cada 67 espectadores";
           } else {
-            // Clase A SIN público visitante: 1 guardia cada 80 espectadores
-            guardias = Math.ceil(publico / 80);
-            ratioTexto = "1 guardia cada 80 espectadores (sin visitante)";
+            // Clase A SIN público visitante: ~1 guardia cada 71 espectadores
+            guardias = Math.ceil(publico / 71.5);
+            ratioTexto = "1 guardia cada 71 espectadores (sin visitante)";
           }
           // Supervisores Clase A: 1 cada 35 guardias (mínimo 2)
           supervisores = Math.max(2, Math.ceil(guardias / 35));
@@ -571,13 +571,13 @@
         } else if (riesgo === "medio") {
           // CLASE B — Riesgo Medio
           if (conVisitante) {
-            // Clase B con visitante: 1 guardia cada 85 espectadores
-            guardias = Math.ceil(publico / 85);
-            ratioTexto = "1 guardia cada 85 espectadores";
+            // Clase B con visitante: 1 guardia cada 80 espectadores
+            guardias = Math.ceil(publico / 80);
+            ratioTexto = "1 guardia cada 80 espectadores";
           } else {
-            // Clase B SIN visitante: 1 guardia cada 95 espectadores
-            guardias = Math.ceil(publico / 95);
-            ratioTexto = "1 guardia cada 95 espectadores (sin visita)";
+            // Clase B SIN visitante: 1 guardia cada 85 espectadores
+            guardias = Math.ceil(publico / 85);
+            ratioTexto = "1 guardia cada 85 espectadores (sin visita)";
           }
           // Supervisores Clase B: 1 cada 30 guardias (mínimo 1)
           supervisores = Math.max(1, Math.ceil(guardias / 30));
@@ -601,13 +601,13 @@
         } else {
           // CLASE C — Riesgo Bajo
           if (conVisitante) {
-            // Clase C con visitante: 1 guardia cada 100 espectadores
-            guardias = Math.ceil(publico / 100);
-            ratioTexto = "1 guardia cada 100 espectadores";
+            // Clase C con visitante: 1 guardia cada 91 espectadores
+            guardias = Math.ceil(publico / 91);
+            ratioTexto = "1 guardia cada 91 espectadores";
           } else {
-            // Clase C SIN visitante: 1 guardia cada 120 espectadores
-            guardias = Math.ceil(publico / 120);
-            ratioTexto = "1 guardia cada 120 espectadores (sin visita)";
+            // Clase C SIN visitante: 1 guardia cada 100 espectadores
+            guardias = Math.ceil(publico / 100);
+            ratioTexto = "1 guardia cada 100 espectadores (sin visita)";
           }
           
           // Supervisores Clase C: 1 cada 40 guardias
@@ -756,4 +756,3 @@
   </script>
 </body>
 </html>
-
