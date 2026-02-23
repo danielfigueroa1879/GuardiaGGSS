@@ -502,6 +502,14 @@
       resultDetail.classList.remove("visible");
     }
 
+    // Inicializar UI al cargar (deportivo es el primero)
+    riesgoSelect.innerHTML = `
+      <option value="alto">Clase A — Alto Riesgo</option>
+      <option value="medio">Clase B — Riesgo Medio</option>
+      <option value="bajo">Clase C — Riesgo Bajo</option>
+    `;
+    actualizarUI();
+
     eventoSelect.addEventListener("change", () => {
       if (eventoSelect.value === "deportivo") {
         riesgoSelect.innerHTML = `
