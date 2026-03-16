@@ -221,6 +221,7 @@
       padding: 12px;
       border-radius: 6px;
       border: 1px solid #ced4da;
+      white-space: pre-line;
       line-height: 1.5;
     }
 
@@ -431,8 +432,8 @@
       <label for="evento">Tipo de Evento:</label>
       <select id="evento">
         <option value="deportivo">Evento Deportivo (Fútbol Profesional)</option>
-        <option value="concierto">Concierto</option>
-        <option value="instalacion">Instalación</option>
+        <option value="concierto">Concierto / Evento Masivo</option>
+        <option value="instalacion">Instalación (Entidad Obligada)</option>
       </select>
 
       <label for="riesgo">Riesgo Asociado:</label>
@@ -469,19 +470,51 @@
         Este cálculo se basa en la normativa de seguridad privada vigente en Chile, incluyendo:
       </p>
       <ul>
-        <li><strong>Ley 21.659:</strong> Nueva Ley de Seguridad Privada (vigente desde 28/11/2025). Regula eventos masivos (+3.000 asistentes), niveles de riesgo, y profesionalización de guardias.</li>
-        <li><strong>Decreto 209:</strong> Reglamento de la Ley 21.659 (M. de Seguridad Pública). Establece obligaciones de entidades, estudios y planes de seguridad.</li>
-        <li><strong>Decreto 208:</strong> Reglamento de Fútbol Profesional. Clasificación de partidos en Clase A, B y C según nivel de conflictividad.</li>
-        <li><strong>Ley 19.327:</strong> Ley de Derechos y Deberes en el Fútbol Profesional y su reglamento.</li>
-        <li><strong>Resolución 3093 Exenta:</strong> Procedimiento para realización de espectáculos o eventos masivos.</li>
-        <li><strong>Circular 28:</strong> Procedimiento general para eventos masivos.</li>
+        <li>
+          <strong>Ley N° 21.659 (vigente desde 28/11/2025):</strong> Ley sobre Seguridad Privada.
+          Regula entidades obligadas, niveles de riesgo, estudios de seguridad, eventos masivos
+          (más de 3.000 asistentes) y la profesionalización del personal de seguridad privada.
+        </li>
+        <li>
+          <strong>Decreto N° 209 (M. de Seguridad Pública):</strong> Reglamento de Seguridad Privada
+          de la Ley N° 21.659. Establece obligaciones de las entidades obligadas, contenidos mínimos
+          del estudio de seguridad, dotaciones de vigilantes privados y guardias de seguridad.
+        </li>
+        <li>
+          <strong>Decreto N° 208 (M. del Interior y Seguridad Pública):</strong> Reglamento de
+          Eventos Masivos de la Ley N° 21.659. Regula el procedimiento de autorización de eventos
+          masivos, el plan de seguridad, los deberes del organizador y la intervención de la
+          Delegación Presidencial Regional.
+        </li>
+        <li>
+          <strong>Resolución Exenta N° 772 (SPD, 26/02/2026 — vigente desde 03/06/2026):</strong>
+          Clasifica los eventos masivos según materia y tipo de riesgo (bajo, medio, alto) y establece
+          las medidas mínimas de seguridad obligatorias según el nivel de riesgo determinado por
+          la matriz ponderada. Una vez vigente, será el instrumento rector para la dotación mínima
+          de seguridad privada en eventos masivos.
+        </li>
+        <li>
+          <strong>Ley N° 19.327:</strong> Ley de Derechos y Deberes en los Espectáculos de Fútbol
+          Profesional. Establece la clasificación de partidos (Clase A, B y C) según nivel de
+          conflictividad y las obligaciones de seguridad asociadas a cada categoría.
+        </li>
       </ul>
+      <p style="margin-top: 0.5rem; font-style: italic; color: #555;">
+        <strong>Nota:</strong> Los ratios de guardias para conciertos y eventos masivos distintos
+        del fútbol profesional tienen carácter referencial y orientador. La Ley N° 21.659 y el
+        Decreto N° 208 no fijan un número fijo de guardias por cantidad de público; la dotación
+        definitiva debe determinarse en el plan de seguridad aprobado por la Delegación Presidencial
+        Regional, conforme al nivel de riesgo del evento.
+      </p>
       <p style="margin-top: 0.5rem;">
-        Todos los guardias deben estar acreditados, contar con chaleco anticorte (Ley 21.659 Art. 53), seguro de vida. Los planes de seguridad deben ser aprobados por la Delegación Presidencial Regional correspondiente.
+        Todos los guardias deben estar acreditados por la Subsecretaría de Prevención del Delito,
+        contar con chaleco anticorte (Art. 53, Ley 21.659) y seguro de vida contratado por el
+        empleador. Los planes de seguridad deben ser aprobados por la Delegación Presidencial
+        Regional correspondiente (Art. 75, Ley 21.659).
       </p>
     </div>
     
-    <div class="signature" style="position:relative; bottom:auto; right:auto; text-align:center; margin-top:1.5rem; font-size:0.7rem; line-height:1.5; opacity:0.7;">
+    <div style="position:relative; bottom:auto; right:auto; text-align:center; margin-top:1.5rem; font-size:0.7rem; line-height:1.5; opacity:0.7;">
       © 2026 Prefectura de Coquimbo. Todos los derechos reservados.<br>
       Plataforma desarrollada por Daniel Figueroa Chacama. Ingeniero en Informática &amp; Ciberseguridad.
     </div>
@@ -498,12 +531,12 @@
     const publicoVisitante = document.getElementById("publicoVisitante");
     const claseInfo = document.getElementById("claseInfo");
 
-    // Descripciones de cada clase deportiva
+    // Descripciones de cada clase deportiva (Ley 19.327 y su reglamento)
     const claseDescripciones = {
       alto: {
         clase: "A",
         titulo: "Clase A — Alto Riesgo",
-        desc: "Partidos de alto riesgo: clásicos, finales, definiciones de campeonato, equipos con historial de conflictividad, Aforo esperado +10.000 o alta conflictividad.",
+        desc: "Partidos de alto riesgo: clásicos, finales, definiciones de campeonato, equipos con historial de conflictividad. Aforo esperado superior a 10.000 espectadores o alta conflictividad comprobada.",
         css: "clase-a"
       },
       medio: {
@@ -515,7 +548,7 @@
       bajo: {
         clase: "C",
         titulo: "Clase C — Riesgo Bajo",
-        desc: "Partidos de riesgo bajo: encuentros sin historial de conflictos significativos. Aforo esperado menor a 7.000 espectadores.",
+        desc: "Partidos de riesgo bajo: encuentros sin historial de conflictos significativos. Aforo esperado inferior a 7.000 espectadores.",
         css: "clase-c"
       }
     };
@@ -538,7 +571,7 @@
         claseInfo.className = `clase-info visible ${info.css}`;
         let infoText = `<strong>${info.titulo}:</strong> ${info.desc}`;
         if (!publicoVisitante.checked && (riesgo === "alto" || riesgo === "medio")) {
-          infoText += `<br><em>⚠️ Sin público visitante: se aplica reducción de guardias.</em>`;
+          infoText += `<br><em>⚠️ Sin público visitante: se aplica reducción de dotación de guardias.</em>`;
         }
         claseInfo.innerHTML = infoText;
       } else {
@@ -579,8 +612,9 @@
     publicoVisitante.addEventListener("change", actualizarUI);
 
     // ============================================================
-    // ALGORITMO MEJORADO DE CÁLCULO DE GUARDIAS
-    // Basado en Ley 21.659, Decreto 209, Decreto 208, Ley 19.327
+    // ALGORITMO DE CÁLCULO DE GUARDIAS
+    // Basado en Ley N° 21.659, Decreto N° 209, Decreto N° 208,
+    // Ley N° 19.327 y Resolución Exenta N° 772 (SPD, 2026)
     // ============================================================
     calcularBtn.addEventListener("click", () => {
       resultDiv.innerText = "";
@@ -606,7 +640,8 @@
       if (eventoType === "deportivo") {
         // =======================================================
         // EVENTO DEPORTIVO — FÚTBOL PROFESIONAL
-        // Clasificación según Decreto 208 / Reglamento Ley 19.327
+        // Clasificación Clase A / B / C según Ley N° 19.327
+        // y su reglamento complementario.
         // =======================================================
         const conVisitante = publicoVisitante.checked;
 
@@ -617,7 +652,7 @@
             guardias = Math.ceil(publico / 67);
             ratioTexto = "1 guardia cada 67 espectadores";
           } else {
-            // Clase A SIN público visitante: ~1 guardia cada 71 espectadores
+            // Clase A SIN público visitante: 1 guardia cada 71 espectadores
             guardias = Math.ceil(publico / 71.5);
             ratioTexto = "1 guardia cada 71 espectadores (sin visitante)";
           }
@@ -629,7 +664,7 @@
           operadorCCTV = 1;
 
           detalle = `<strong>Clase A — Alto Riesgo${!conVisitante ? " (Sin Público Visitante)" : ""}:</strong><br>`;
-          detalle += `• Ratio aplicado: ${ratioTexto}<br>`;
+          detalle += `• Ratio aplicado: ${ratioTexto} (Ley N° 19.327)<br>`;
           detalle += `• Supervisores: 1 cada 35 guardias (mín. 2)<br>`;
           detalle += `• Jefe de seguridad acreditado: obligatorio<br>`;
           detalle += `• Operador CCTV: ${operadorCCTV} (videovigilancia del recinto)<br>`;
@@ -637,7 +672,7 @@
             detalle += `• <em>Se requiere segregación de hinchadas y accesos independientes</em><br>`;
           }
           if (publico >= 3000) {
-            detalle += `• <em>Evento masivo (Ley 21.659): requiere plan de seguridad aprobado por Delegación Presidencial Regional</em><br>`;
+            detalle += `• <em>Evento masivo (Ley N° 21.659, Art. 64): requiere plan de seguridad aprobado por Delegación Presidencial Regional y seguro de responsabilidad civil</em><br>`;
           }
 
         } else if (riesgo === "medio") {
@@ -659,7 +694,7 @@
           operadorCCTV = 1;
 
           detalle = `<strong>Clase B — Riesgo Medio${!conVisitante ? " (Sin Visita)" : ""}:</strong><br>`;
-          detalle += `• Ratio aplicado: ${ratioTexto}<br>`;
+          detalle += `• Ratio aplicado: ${ratioTexto} (Ley N° 19.327)<br>`;
           detalle += `• Supervisores: 1 cada 30 guardias (mín. 1)<br>`;
           detalle += `• Jefe de seguridad acreditado: obligatorio<br>`;
           detalle += `• Operador CCTV: ${operadorCCTV} (videovigilancia del recinto)<br>`;
@@ -667,7 +702,7 @@
             detalle += `• <em>Se recomienda segregación de hinchadas</em><br>`;
           }
           if (publico >= 3000) {
-            detalle += `• <em>Evento masivo (Ley 21.659): requiere plan de seguridad aprobado</em><br>`;
+            detalle += `• <em>Evento masivo (Ley N° 21.659, Art. 64): requiere plan de seguridad aprobado por Delegación Presidencial Regional y seguro de responsabilidad civil</em><br>`;
           }
 
         } else {
@@ -682,7 +717,7 @@
             ratioTexto = "1 guardia cada 100 espectadores (sin visita)";
           }
           
-          // Supervisores Clase C: 1 cada 40 guardias
+          // Supervisores Clase C: escala según dotación total
           if (guardias <= 10) {
             supervisores = 0;
           } else if (guardias <= 50) {
@@ -698,28 +733,37 @@
           jefesSeguridad = 1;
 
           detalle = `<strong>Clase C — Riesgo Bajo${!conVisitante ? " (Sin Visita)" : ""}:</strong><br>`;
-          detalle += `• Ratio aplicado: ${ratioTexto}<br>`;
+          detalle += `• Ratio aplicado: ${ratioTexto} (Ley N° 19.327)<br>`;
           detalle += `• Supervisores: según escala (mín. 0 si ≤10 guardias)<br>`;
           detalle += `• Jefe de seguridad acreditado: obligatorio<br>`;
           detalle += `• Operador CCTV: ${operadorCCTV} (videovigilancia del recinto)<br>`;
           if (publico >= 3000) {
-            detalle += `• <em>Evento masivo (Ley 21.659): requiere plan de seguridad aprobado</em><br>`;
+            detalle += `• <em>Evento masivo (Ley N° 21.659, Art. 64): requiere plan de seguridad aprobado por Delegación Presidencial Regional y seguro de responsabilidad civil</em><br>`;
           }
         }
 
         // Mínimo de guardias para cualquier evento deportivo: 6
         guardias = Math.max(6, guardias);
 
-        // Equipamiento obligatorio (Ley 21.659)
-        detalle += `<br><strong>Equipamiento obligatorio (Ley 21.659):</strong><br>`;
-        detalle += `• Chaleco anticorte para todo guardia<br>`;
-        detalle += `• Seguro de vida contratado por empleador<br>`;
-        detalle += `• Guardias deben estar acreditados<br>`;
+        // Equipamiento obligatorio (Ley N° 21.659, Art. 53)
+        detalle += `<br><strong>Equipamiento obligatorio (Ley N° 21.659, Art. 53):</strong><br>`;
+        detalle += `• Chaleco anticorte para todo guardia de seguridad<br>`;
+        detalle += `• Seguro de vida contratado por el empleador<br>`;
+        detalle += `• Guardias deben estar acreditados por la SPD<br>`;
 
       } else if (eventoType === "concierto") {
         // =======================================================
         // CONCIERTO / EVENTO MASIVO
-        // Basado en Ley 21.659, Resolución 3093, Circular 28
+        // Basado en Ley N° 21.659 (Título IV), Decreto N° 208 y
+        // Resolución Exenta N° 772 (SPD, vigente desde 03/06/2026).
+        //
+        // IMPORTANTE: Los ratios indicados son referenciales y
+        // orientadores. La Ley N° 21.659 y el Decreto N° 208 no
+        // fijan un número fijo de guardias por espectador; la
+        // dotación definitiva debe contenerse en el plan de
+        // seguridad aprobado por la Delegación Presidencial
+        // Regional, conforme al nivel de riesgo del evento
+        // (Arts. 72 y 75, Ley N° 21.659; Art. 18, Decreto N° 208).
         // =======================================================
         const factorRiesgo = riesgo === "bajo" ? 1 : riesgo === "medio" ? 1.5 : 2;
         guardias = Math.ceil((publico / 100) * factorRiesgo);
@@ -738,22 +782,30 @@
         controlAcceso = publico >= 3000 ? Math.max(3, Math.ceil(publico / 400)) : 0;
 
         const riesgoTextoConcierto = riesgo === "alto" ? "Alto" : riesgo === "medio" ? "Medio" : "Bajo";
-        detalle = `<strong>Concierto — Riesgo ${riesgoTextoConcierto}:</strong><br>`;
-        detalle += `• Factor de riesgo: ${factorRiesgo}x (1 guardia c/${Math.round(100/factorRiesgo)} espect.)<br>`;
+        detalle = `<strong>Concierto / Evento Masivo — Riesgo ${riesgoTextoConcierto}:</strong><br>`;
+        detalle += `• Factor de riesgo referencial: ${factorRiesgo}x (1 guardia c/${Math.round(100/factorRiesgo)} espect.)<br>`;
+        detalle += `• <em>⚠️ Ratio orientador: la dotación definitiva la determina el plan de seguridad aprobado por la Delegación Presidencial Regional (Art. 75, Ley N° 21.659; Art. 18, D. 208)</em><br>`;
         if (jefesSeguridad > 0) {
-          detalle += `• Jefe de seguridad acreditado: obligatorio<br>`;
+          detalle += `• Jefe de seguridad acreditado: obligatorio (Art. 23, Ley N° 21.659)<br>`;
         }
         if (controlAcceso > 0) {
-          detalle += `• Personal control de acceso: ${controlAcceso}<br>`;
+          detalle += `• Personal control de acceso estimado: ${controlAcceso}<br>`;
         }
         if (publico >= 3000) {
-          detalle += `• <em>Evento masivo (Ley 21.659): requiere autorización Delegación Presidencial Regional, plan de seguridad y seguro contra terceros</em><br>`;
+          detalle += `• <em>Evento masivo (Art. 64, Ley N° 21.659): requiere autorización de Delegación Presidencial Regional, plan de seguridad, responsable de seguridad designado y seguro de responsabilidad civil (Arts. 70–75, Ley N° 21.659; Art. 13–21, D. 208)</em><br>`;
+        }
+        if (riesgo === "alto") {
+          detalle += `• <em>Riesgo alto — Res. N° 772 (vigente desde 03/06/2026): exige CCTV integral, puesto de mando y control, pórticos detectores de metales en todos los accesos, dos anillos de seguridad y coordinación vinculante con Carabineros, Bomberos, SAMU y SENAPRED</em><br>`;
+        } else if (riesgo === "medio") {
+          detalle += `• <em>Riesgo medio — Res. N° 772 (vigente desde 03/06/2026): exige detectores de metales manuales, CCTV en accesos, al menos un anillo de seguridad y ambulancia básica dedicada (M1)</em><br>`;
         }
 
       } else if (eventoType === "instalacion") {
         // =======================================================
         // INSTALACIÓN (Entidad Obligada)
-        // Basado en Ley 21.659 Título II, Decreto 209
+        // Basado en Ley N° 21.659 (Título II) y Decreto N° 209.
+        // La dotación definitiva debe establecerse en el estudio
+        // de seguridad aprobado por la SPD (Art. 15, Decreto N° 209).
         // =======================================================
         const factorRiesgo = riesgo === "bajo" ? 1 : riesgo === "medio" ? 1.5 : 2;
         guardias = Math.ceil((publico / 100) * factorRiesgo);
@@ -787,21 +839,22 @@
         }
 
         const riesgoTextoInst = riesgo === "alto" ? "Alto" : riesgo === "medio" ? "Medio" : "Bajo";
-        detalle = `<strong>Instalación — Riesgo ${riesgoTextoInst}:</strong><br>`;
-        detalle += `• Factor de riesgo: ${factorRiesgo}x<br>`;
+        detalle = `<strong>Instalación (Entidad Obligada) — Riesgo ${riesgoTextoInst}:</strong><br>`;
+        detalle += `• Factor de riesgo referencial: ${factorRiesgo}x<br>`;
+        detalle += `• <em>⚠️ La dotación definitiva debe establecerse en el estudio de seguridad aprobado por la Subsecretaría de Prevención del Delito (Art. 15, Decreto N° 209)</em><br>`;
         if (jefesSeguridad > 0) {
-          detalle += `• Jefe de seguridad con título profesional: obligatorio (Ley 21.659 Art. 22 Decreto 209)<br>`;
+          detalle += `• Jefe de seguridad con título profesional de al menos 8 semestres: obligatorio (Art. 23, Ley N° 21.659)<br>`;
         }
-        detalle += `• Entidad obligada debe presentar estudio de seguridad (Art. 15 Decreto 209)<br>`;
+        detalle += `• Entidad obligada debe presentar estudio de seguridad ante la SPD, previo informe técnico de Carabineros (Art. 15, Decreto N° 209)<br>`;
         if (riesgo === "alto") {
-          detalle += `• <em>Riesgo alto: podrá requerir vigilantes privados armados (Ley 21.659)</em><br>`;
+          detalle += `• <em>Riesgo alto: la SPD podrá requerir vigilantes privados armados dentro del sistema de vigilancia privada (Arts. 9 y 22, Ley N° 21.659)</em><br>`;
         }
       }
 
       // Construir texto principal de resultado
       const supervisorText = supervisores === 1 ? " supervisor" : " supervisores";
       const eventText = eventoType === "deportivo" ? " para este evento deportivo." :
-                        eventoType === "concierto" ? " para este concierto." :
+                        eventoType === "concierto" ? " para este concierto / evento masivo." :
                         eventoType === "instalacion" ? " para esta instalación." : "";
 
       let resultText = `Necesitas ${guardias} guardias y ${supervisores}${supervisorText}${eventText}`;
