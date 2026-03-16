@@ -213,6 +213,14 @@
       transform: translateY(-2px);
     }
 
+    @keyframes borderGlow {
+      0%   { box-shadow: 4px 0 12px -2px rgba(69,123,157,0.55), 0 0 0 1.5px rgba(69,123,157,0.18); }
+      25%  { box-shadow: 0 4px 12px -2px rgba(69,123,157,0.55), 0 0 0 1.5px rgba(69,123,157,0.18); }
+      50%  { box-shadow: -4px 0 12px -2px rgba(69,123,157,0.55), 0 0 0 1.5px rgba(69,123,157,0.18); }
+      75%  { box-shadow: 0 -4px 12px -2px rgba(69,123,157,0.55), 0 0 0 1.5px rgba(69,123,157,0.18); }
+      100% { box-shadow: 4px 0 12px -2px rgba(69,123,157,0.55), 0 0 0 1.5px rgba(69,123,157,0.18); }
+    }
+
     .result {
       font-size: 1.05rem;
       margin-top: 1.5rem;
@@ -225,6 +233,12 @@
       border: 1px solid #ced4da;
       white-space: pre-line;
       line-height: 1.5;
+      transition: border-color 0.4s ease;
+      position: relative;
+    }
+    .result.activo {
+      border-color: rgba(69, 123, 157, 0.6);
+      animation: borderGlow 3s ease-in-out infinite;
     }
 
     .result-detail {
@@ -352,6 +366,17 @@
         background-color: #333 !important;
         border: 1px solid white !important;
         color: #ff0000 !important;
+      }
+      @keyframes borderGlowDark {
+        0%   { box-shadow: 4px 0 14px -2px rgba(144,202,249,0.5), 0 0 0 1.5px rgba(144,202,249,0.15); }
+        25%  { box-shadow: 0 4px 14px -2px rgba(144,202,249,0.5), 0 0 0 1.5px rgba(144,202,249,0.15); }
+        50%  { box-shadow: -4px 0 14px -2px rgba(144,202,249,0.5), 0 0 0 1.5px rgba(144,202,249,0.15); }
+        75%  { box-shadow: 0 -4px 14px -2px rgba(144,202,249,0.5), 0 0 0 1.5px rgba(144,202,249,0.15); }
+        100% { box-shadow: 4px 0 14px -2px rgba(144,202,249,0.5), 0 0 0 1.5px rgba(144,202,249,0.15); }
+      }
+      .result.activo {
+        border-color: rgba(144, 202, 249, 0.6) !important;
+        animation: borderGlowDark 3s ease-in-out infinite !important;
       }
       .result-detail {
         background-color: #3a3a3a;
@@ -586,6 +611,7 @@
 
       // Limpiar resultados
       resultDiv.innerText = "";
+      resultDiv.classList.remove("activo");
       resultDetail.classList.remove("visible");
     }
 
@@ -624,6 +650,7 @@
     // ============================================================
     calcularBtn.addEventListener("click", () => {
       resultDiv.innerText = "";
+      resultDiv.classList.remove("activo");
       resultDetail.classList.remove("visible");
 
       const eventoType = eventoSelect.value;
@@ -879,6 +906,7 @@
       resultText += `\n\nTotal personal de seguridad: ${totalPersonal}`;
 
       resultDiv.innerText = resultText;
+      resultDiv.classList.add("activo");
 
       // Mostrar detalle
       resultDetail.innerHTML = detalle;
