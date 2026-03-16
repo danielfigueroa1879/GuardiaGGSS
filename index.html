@@ -214,11 +214,11 @@
     }
 
     @keyframes borderGlow {
-      0%   { box-shadow: 4px 0 12px -2px rgba(69,123,157,0.55), 0 0 0 1.5px rgba(69,123,157,0.18); }
-      25%  { box-shadow: 0 4px 12px -2px rgba(69,123,157,0.55), 0 0 0 1.5px rgba(69,123,157,0.18); }
-      50%  { box-shadow: -4px 0 12px -2px rgba(69,123,157,0.55), 0 0 0 1.5px rgba(69,123,157,0.18); }
-      75%  { box-shadow: 0 -4px 12px -2px rgba(69,123,157,0.55), 0 0 0 1.5px rgba(69,123,157,0.18); }
-      100% { box-shadow: 4px 0 12px -2px rgba(69,123,157,0.55), 0 0 0 1.5px rgba(69,123,157,0.18); }
+      0%   { box-shadow: 5px 0 14px -2px rgba(69,123,157,0.55), 0 0 0 2.5px rgba(69,123,157,0.22); }
+      25%  { box-shadow: 0 5px 14px -2px rgba(69,123,157,0.55), 0 0 0 2.5px rgba(69,123,157,0.22); }
+      50%  { box-shadow: -5px 0 14px -2px rgba(69,123,157,0.55), 0 0 0 2.5px rgba(69,123,157,0.22); }
+      75%  { box-shadow: 0 -5px 14px -2px rgba(69,123,157,0.55), 0 0 0 2.5px rgba(69,123,157,0.22); }
+      100% { box-shadow: 5px 0 14px -2px rgba(69,123,157,0.55), 0 0 0 2.5px rgba(69,123,157,0.22); }
     }
 
     .result {
@@ -234,10 +234,10 @@
       white-space: pre-line;
       line-height: 1.5;
       transition: border-color 0.4s ease;
-      position: relative;
     }
     .result.activo {
-      border-color: rgba(69, 123, 157, 0.6);
+      border-color: transparent;
+      border-width: 3.5px;
       animation: borderGlow 3s ease-in-out infinite;
     }
 
@@ -362,20 +362,21 @@
       .normativa h2 {
         color: #ffffff;
       }
+      @keyframes borderGlowDark {
+        0%   { box-shadow: 5px 0 16px -2px rgba(144,202,249,0.5), 0 0 0 2.5px rgba(144,202,249,0.18); }
+        25%  { box-shadow: 0 5px 16px -2px rgba(144,202,249,0.5), 0 0 0 2.5px rgba(144,202,249,0.18); }
+        50%  { box-shadow: -5px 0 16px -2px rgba(144,202,249,0.5), 0 0 0 2.5px rgba(144,202,249,0.18); }
+        75%  { box-shadow: 0 -5px 16px -2px rgba(144,202,249,0.5), 0 0 0 2.5px rgba(144,202,249,0.18); }
+        100% { box-shadow: 5px 0 16px -2px rgba(144,202,249,0.5), 0 0 0 2.5px rgba(144,202,249,0.18); }
+      }
       .result {
         background-color: #333 !important;
         border: 1px solid white !important;
         color: #ff0000 !important;
       }
-      @keyframes borderGlowDark {
-        0%   { box-shadow: 4px 0 14px -2px rgba(144,202,249,0.5), 0 0 0 1.5px rgba(144,202,249,0.15); }
-        25%  { box-shadow: 0 4px 14px -2px rgba(144,202,249,0.5), 0 0 0 1.5px rgba(144,202,249,0.15); }
-        50%  { box-shadow: -4px 0 14px -2px rgba(144,202,249,0.5), 0 0 0 1.5px rgba(144,202,249,0.15); }
-        75%  { box-shadow: 0 -4px 14px -2px rgba(144,202,249,0.5), 0 0 0 1.5px rgba(144,202,249,0.15); }
-        100% { box-shadow: 4px 0 14px -2px rgba(144,202,249,0.5), 0 0 0 1.5px rgba(144,202,249,0.15); }
-      }
       .result.activo {
-        border-color: rgba(144, 202, 249, 0.6) !important;
+        border-color: transparent !important;
+        border-width: 3.5px !important;
         animation: borderGlowDark 3s ease-in-out infinite !important;
       }
       .result-detail {
@@ -465,7 +466,7 @@
       <select id="evento">
         <option value="deportivo">Evento Deportivo (Fútbol Profesional)</option>
         <option value="concierto">Concierto / Evento Masivo</option>
-        <option value="instalacion">Instalación </option>
+        <option value="instalacion">Instalación</option>
       </select>
 
       <label for="riesgo">Riesgo Asociado:</label>
@@ -872,7 +873,7 @@
         }
 
         const riesgoTextoInst = riesgo === "alto" ? "Alto" : riesgo === "medio" ? "Medio" : "Bajo";
-        detalle = `<strong>Instalación (Entidad Obligada) — Riesgo ${riesgoTextoInst}:</strong><br>`;
+        detalle = `<strong>Instalación — Riesgo ${riesgoTextoInst}:</strong><br>`;
         detalle += `• Factor de riesgo referencial: ${factorRiesgo}x<br>`;
         detalle += `• <em>⚠️ La dotación definitiva debe establecerse en el estudio de seguridad aprobado por la Subsecretaría de Prevención del Delito (Art. 15, Decreto N° 209)</em><br>`;
         if (jefesSeguridad > 0) {
