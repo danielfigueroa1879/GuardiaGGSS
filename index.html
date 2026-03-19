@@ -679,19 +679,20 @@
         // =======================================================
         const conVisitante = publicoVisitante.checked;
 
+        // Redondear al múltiplo de 5 superior más cercano
+        const r5 = n => n % 5 === 0 ? n : n + (5 - n % 5);
+
         if (riesgo === "alto") {
           // CLASE A — Alto Riesgo
           if (conVisitante) {
-            // Clase A con público visitante: 1 guardia cada 67 espectadores
-            guardias = Math.ceil(publico / 79);
+            guardias = r5(Math.ceil(publico / 79));
             ratioTexto = "1 guardia cada 79 espectadores";
+            supervisores = Math.max(2, Math.ceil(guardias / 26));
           } else {
-            // Clase A SIN público visitante: 1 guardia cada 71 espectadores
-            guardias = Math.ceil(publico / 84);
+            guardias = r5(Math.ceil(publico / 84));
             ratioTexto = "1 guardia cada 84 espectadores (sin visitante)";
+            supervisores = Math.max(2, Math.ceil(guardias / 30));
           }
-          // Supervisores Clase A: 1 cada 35 guardias (mínimo 2)
-          supervisores = Math.max(2, Math.ceil(guardias / 35));
           // Jefe de seguridad obligatorio
           jefesSeguridad = 1;
           // Operador CCTV: siempre 1
@@ -699,7 +700,7 @@
 
           detalle = `<strong>Clase A — Alto Riesgo${!conVisitante ? " (Sin Público Visitante)" : ""}:</strong><br>`;
           detalle += `• Ratio aplicado: ${ratioTexto} (Ley N° 19.327)<br>`;
-          detalle += `• Supervisores: 1 cada 35 guardias (mín. 2)<br>`;
+          detalle += `• Supervisores: ${supervisores}<br>`;
           detalle += `• Jefe de seguridad acreditado: obligatorio<br>`;
           detalle += `• Operador CCTV: ${operadorCCTV} (videovigilancia del recinto)<br>`;
           if (conVisitante) {
@@ -712,13 +713,11 @@
         } else if (riesgo === "medio") {
           // CLASE B — Riesgo Medio
           if (conVisitante) {
-            // Clase B con visitante: 1 guardia cada 80 espectadores
-            guardias = Math.ceil(publico / 93);
-            ratioTexto = "1 guardia cada 93 espectadores";
+            guardias = r5(Math.ceil(publico / 91));
+            ratioTexto = "1 guardia cada 91 espectadores";
           } else {
-            // Clase B SIN visitante: 1 guardia cada 100 espectadores
-            guardias = Math.ceil(publico / 101);
-            ratioTexto = "1 guardia cada 101 espectadores (sin visita)";
+            guardias = r5(Math.ceil(publico / 100));
+            ratioTexto = "1 guardia cada 100 espectadores (sin visita)";
           }
           // Supervisores Clase B: 1 cada 30 guardias (mínimo 1)
           supervisores = Math.max(1, Math.ceil(guardias / 30));
@@ -742,12 +741,10 @@
         } else {
           // CLASE C — Riesgo Bajo
           if (conVisitante) {
-            // Clase C con visitante: 1 guardia cada 91 espectadores
-            guardias = Math.ceil(publico / 109);
+            guardias = r5(Math.ceil(publico / 109));
             ratioTexto = "1 guardia cada 109 espectadores";
           } else {
-            // Clase C SIN visitante: 1 guardia cada 100 espectadores
-            guardias = Math.ceil(publico / 121);
+            guardias = r5(Math.ceil(publico / 121));
             ratioTexto = "1 guardia cada 121 espectadores (sin visita)";
           }
           
