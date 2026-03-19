@@ -796,7 +796,7 @@
         // Regional, conforme al nivel de riesgo del evento
         // (Arts. 72 y 75, Ley N° 21.659; Art. 18, Decreto N° 208).
         // =======================================================
-        const factorRiesgo = riesgo === "bajo" ? 0.70 : riesgo === "medio" ? 1.05 : 1.30;
+        const factorRiesgo = riesgo === "bajo" ? 0.70 : riesgo === "medio" ? 1.05 : 1.09;
         guardias = Math.ceil((publico / 100) * factorRiesgo);
 
         if (riesgo === "alto") {
