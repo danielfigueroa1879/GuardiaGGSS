@@ -800,7 +800,7 @@
         guardias = Math.ceil((publico / 100) * factorRiesgo);
 
         if (riesgo === "alto") {
-          supervisores = Math.max(2, Math.ceil(guardias / 15));
+          supervisores = Math.max(2, Math.ceil(guardias / 20));
         } else if (riesgo === "medio") {
           supervisores = guardias < 10 ? 1 : Math.ceil(guardias / 18);
         } else {
