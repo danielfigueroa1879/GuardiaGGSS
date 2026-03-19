@@ -683,12 +683,12 @@
           // CLASE A — Alto Riesgo
           if (conVisitante) {
             // Clase A con público visitante: 1 guardia cada 67 espectadores
-            guardias = Math.ceil(publico / 67);
-            ratioTexto = "1 guardia cada 67 espectadores";
+            guardias = Math.ceil(publico / 79);
+            ratioTexto = "1 guardia cada 79 espectadores";
           } else {
             // Clase A SIN público visitante: 1 guardia cada 71 espectadores
-            guardias = Math.ceil(publico / 71.5);
-            ratioTexto = "1 guardia cada 71 espectadores (sin visitante)";
+            guardias = Math.ceil(publico / 84);
+            ratioTexto = "1 guardia cada 84 espectadores (sin visitante)";
           }
           // Supervisores Clase A: 1 cada 35 guardias (mínimo 2)
           supervisores = Math.max(2, Math.ceil(guardias / 35));
@@ -713,12 +713,12 @@
           // CLASE B — Riesgo Medio
           if (conVisitante) {
             // Clase B con visitante: 1 guardia cada 80 espectadores
-            guardias = Math.ceil(publico / 80);
-            ratioTexto = "1 guardia cada 80 espectadores";
+            guardias = Math.ceil(publico / 93);
+            ratioTexto = "1 guardia cada 93 espectadores";
           } else {
-            // Clase B SIN visitante: 1 guardia cada 85 espectadores
-            guardias = Math.ceil(publico / 85);
-            ratioTexto = "1 guardia cada 85 espectadores (sin visita)";
+            // Clase B SIN visitante: 1 guardia cada 100 espectadores
+            guardias = Math.ceil(publico / 101);
+            ratioTexto = "1 guardia cada 101 espectadores (sin visita)";
           }
           // Supervisores Clase B: 1 cada 30 guardias (mínimo 1)
           supervisores = Math.max(1, Math.ceil(guardias / 30));
@@ -743,12 +743,12 @@
           // CLASE C — Riesgo Bajo
           if (conVisitante) {
             // Clase C con visitante: 1 guardia cada 91 espectadores
-            guardias = Math.ceil(publico / 91);
-            ratioTexto = "1 guardia cada 91 espectadores";
+            guardias = Math.ceil(publico / 109);
+            ratioTexto = "1 guardia cada 109 espectadores";
           } else {
             // Clase C SIN visitante: 1 guardia cada 100 espectadores
-            guardias = Math.ceil(publico / 100);
-            ratioTexto = "1 guardia cada 100 espectadores (sin visita)";
+            guardias = Math.ceil(publico / 121);
+            ratioTexto = "1 guardia cada 121 espectadores (sin visita)";
           }
           
           // Supervisores Clase C: escala según dotación total
@@ -799,32 +799,22 @@
         // Regional, conforme al nivel de riesgo del evento
         // (Arts. 72 y 75, Ley N° 21.659; Art. 18, Decreto N° 208).
         // =======================================================
-        const factorRiesgo = riesgo === "bajo" ? 1 : riesgo === "medio" ? 1.5 : 2;
+        const factorRiesgo = riesgo === "bajo" ? 0.70 : riesgo === "medio" ? 1.05 : 1.30;
         guardias = Math.ceil((publico / 100) * factorRiesgo);
 
         if (riesgo === "alto") {
-          supervisores = Math.max(1, Math.ceil(publico / 1500));
-          jefesSeguridad = 1;
+          supervisores = Math.max(2, Math.ceil(guardias / 15));
         } else if (riesgo === "medio") {
-          supervisores = guardias < 10 ? 0 : Math.ceil(guardias / 50);
-          jefesSeguridad = publico >= 5000 ? 1 : 0;
+          supervisores = guardias < 10 ? 1 : Math.ceil(guardias / 18);
         } else {
-          supervisores = guardias < 10 ? 0 : Math.ceil(guardias / 50);
+          supervisores = guardias < 10 ? 0 : Math.ceil(guardias / 22);
           if (publico >= 3000) supervisores = Math.max(1, supervisores);
         }
-
-        controlAcceso = publico >= 3000 ? Math.max(3, Math.ceil(publico / 400)) : 0;
 
         const riesgoTextoConcierto = riesgo === "alto" ? "Alto" : riesgo === "medio" ? "Medio" : "Bajo";
         detalle = `<strong>Concierto / Evento Masivo — Riesgo ${riesgoTextoConcierto}:</strong><br>`;
         detalle += `• Factor de riesgo referencial: ${factorRiesgo}x (1 guardia c/${Math.round(100/factorRiesgo)} espect.)<br>`;
         detalle += `• <em>⚠️ Ratio orientador: la dotación definitiva la determina el plan de seguridad aprobado por la Delegación Presidencial Regional (Art. 75, Ley N° 21.659; Art. 18, D. 208)</em><br>`;
-        if (jefesSeguridad > 0) {
-          detalle += `• Jefe de seguridad acreditado: obligatorio (Art. 23, Ley N° 21.659)<br>`;
-        }
-        if (controlAcceso > 0) {
-          detalle += `• Personal control de acceso estimado: ${controlAcceso}<br>`;
-        }
         if (publico >= 3000) {
           detalle += `• <em>Evento masivo (Art. 64, Ley N° 21.659): requiere autorización de Delegación Presidencial Regional, plan de seguridad, responsable de seguridad designado y seguro de responsabilidad civil (Arts. 70–75, Ley N° 21.659; Art. 13–21, D. 208)</em><br>`;
         }
@@ -841,7 +831,7 @@
         // La dotación definitiva debe establecerse en el estudio
         // de seguridad aprobado por la SPD (Art. 15, Decreto N° 209).
         // =======================================================
-        const factorRiesgo = riesgo === "bajo" ? 1 : riesgo === "medio" ? 1.5 : 2;
+        const factorRiesgo = riesgo === "bajo" ? 0.85 : riesgo === "medio" ? 1.25 : 1.7;
         guardias = Math.ceil((publico / 100) * factorRiesgo);
 
         if (riesgo === "bajo") {
