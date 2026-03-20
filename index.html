@@ -117,11 +117,11 @@
     }
 
     h1 {
-      font-size: 1.75rem;
+      font-size: 1.45rem;
       margin-top: 0.5rem;
       margin-bottom: 1.5rem;
       text-align: center;
-      color: var(--primary-color);
+      color: #1D3557;
     }
 
     label {
@@ -250,17 +250,35 @@
       padding: 0.75rem;
       font-size: 1rem;
       border: none;
-      border-radius: 6px;
+      border-radius: 14px;
       background-color: var(--primary-color);
       color: #fff;
       cursor: pointer;
-      transition: background-color var(--transition-speed), transform var(--transition-speed);
+      transition: background-color 0.4s ease, transform var(--transition-speed), box-shadow 0.4s ease;
       margin-top: 1.5rem;
       font-family: var(--font-family);
     }
     .btn-calc:hover {
       background-color: var(--accent-color);
       transform: translateY(-2px);
+    }
+    .btn-calc.btn-riesgo-alto {
+      background-color: #c62828;
+    }
+    .btn-calc.btn-riesgo-alto:hover {
+      background-color: #b71c1c;
+    }
+    .btn-calc.btn-riesgo-medio {
+      background-color: #e65100;
+    }
+    .btn-calc.btn-riesgo-medio:hover {
+      background-color: #bf360c;
+    }
+    .btn-calc.btn-riesgo-bajo {
+      background-color: #2e7d32;
+    }
+    .btn-calc.btn-riesgo-bajo:hover {
+      background-color: #1b5e20;
     }
 
     @keyframes borderGlow {
@@ -401,6 +419,24 @@
       }
       .btn-calc:hover {
         background-color: #1e4d7b;
+      }
+      .btn-calc.btn-riesgo-alto {
+        background-color: #ef5350 !important;
+      }
+      .btn-calc.btn-riesgo-alto:hover {
+        background-color: #e53935 !important;
+      }
+      .btn-calc.btn-riesgo-medio {
+        background-color: #ff7043 !important;
+      }
+      .btn-calc.btn-riesgo-medio:hover {
+        background-color: #f4511e !important;
+      }
+      .btn-calc.btn-riesgo-bajo {
+        background-color: #43a047 !important;
+      }
+      .btn-calc.btn-riesgo-bajo:hover {
+        background-color: #388e3c !important;
       }
       .normativa {
         background-color: #2e2e2e;
@@ -571,7 +607,7 @@
       <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
       Volver
     </button>
-    <h1>Cantidad de Guardias por Evento</h1>
+    <h1>Cantidad Guardia Evento</h1>
     <form id="guardiasForm">
       <label for="evento">Tipo de Evento:</label>
       <select id="evento">
@@ -747,6 +783,15 @@
       resultDiv.classList.remove("activo");
       resultDetail.classList.remove("visible");
       actualizarColorRiesgo();
+
+      // Color del botón según riesgo (solo deportivo)
+      calcularBtn.classList.remove("btn-riesgo-alto", "btn-riesgo-medio", "btn-riesgo-bajo");
+      if (esDeportivo) {
+        const riesgo = riesgoSelect.value;
+        if (riesgo === "alto") calcularBtn.classList.add("btn-riesgo-alto");
+        else if (riesgo === "medio") calcularBtn.classList.add("btn-riesgo-medio");
+        else calcularBtn.classList.add("btn-riesgo-bajo");
+      }
     }
 
     // Inicializar UI al cargar (deportivo es el primero)
