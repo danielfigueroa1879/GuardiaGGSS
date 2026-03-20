@@ -1027,6 +1027,7 @@
 
       resultDiv.innerText = resultText;
       resultDiv.classList.add("activo");
+      setTimeout(() => resultDiv.scrollIntoView({ behavior: "smooth", block: "center" }), 50);
       mainContainer.classList.remove("riesgo-alto", "riesgo-medio", "riesgo-bajo");
       if (eventoType === "deportivo") {
         if (riesgo === "alto") mainContainer.classList.add("riesgo-alto");
